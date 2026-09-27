@@ -1,0 +1,3113 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График встреч перед проповедническим служением</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* ===== FONTS & RESET ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #EFE6D5;
+    background-image: radial-gradient(#D4A843 0.8px, transparent 0.8px);
+    background-size: 24px 24px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #1B2A4A;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 30px 10px;
+}
+
+/* Word wrap for all text inputs */
+input[type="text"] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Meeting PDF export button */
+.export-pdf-btn--meeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 24px auto 16px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #C8A45A, #D4A843);
+    color: #1B2A4A;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(200, 164, 90, 0.3);
+}
+
+.export-pdf-btn--meeting:hover {
+    background: linear-gradient(135deg, #D4A843, #C8A45A);
+    box-shadow: 0 4px 12px rgba(200, 164, 90, 0.4);
+    transform: translateY(-1px);
+}
+
+/* ===== APP CONTAINER ===== */
+.app {
+    max-width: 900px;
+    margin: 20px auto;
+    background: #FDF8F0;
+    border: 4px double #C8A45A;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(27, 42, 74, 0.15);
+    position: relative;
+    overflow: visible;
+}
+
+/* ===== NAV BAR ===== */
+.nav-bar {
+    background: #1B2A4A;
+    padding: 0;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar__menu-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+/* Language Switcher */
+.lang-switcher {
+    position: relative;
+    margin-right: 16px;
+}
+
+.lang-switcher__btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid rgba(200, 164, 90, 0.4);
+    border-radius: 6px;
+    background: rgba(200, 164, 90, 0.1);
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+}
+
+.lang-switcher__btn:hover {
+    background: rgba(200, 164, 90, 0.2);
+    border-color: #C8A45A;
+}
+
+.lang-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: #fff;
+    border: 1px solid rgba(212, 168, 67, 0.3);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(27, 42, 74, 0.15);
+    z-index: 200;
+    overflow: hidden;
+    min-width: 150px;
+}
+
+.lang-dropdown.open {
+    display: block;
+}
+
+.lang-dropdown__item {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    color: #1B2A4A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(212, 168, 67, 0.1);
+}
+
+.lang-dropdown__item:last-child {
+    border-bottom: none;
+}
+
+.lang-dropdown__item:hover {
+    background: rgba(212, 168, 67, 0.08);
+}
+
+.lang-dropdown__item.active {
+    background: rgba(27, 42, 74, 0.06);
+    font-weight: 700;
+    border-left: 3px solid #C8A45A;
+}
+
+.nav-bar__menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: left;
+}
+
+.nav-bar__menu-btn:hover {
+    background: rgba(200, 164, 90, 0.1);
+}
+
+.nav-bar__current-label {
+    flex: 1;
+    color: #fff;
+    font-weight: 500;
+}
+
+.nav-bar__chevron {
+    transition: transform 0.2s;
+    color: #C8A45A;
+}
+
+.nav-bar__chevron.open {
+    transform: rotate(180deg);
+}
+
+.nav-bar__dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid rgba(212, 168, 67, 0.3);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 8px 24px rgba(27, 42, 74, 0.15);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.nav-bar__dropdown.open {
+    display: block;
+}
+
+.nav-bar__dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: #1B2A4A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(212, 168, 67, 0.1);
+}
+
+.nav-bar__dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.nav-bar__dropdown-item:hover {
+    background: rgba(212, 168, 67, 0.08);
+}
+
+.nav-bar__dropdown-item.active {
+    background: rgba(27, 42, 74, 0.06);
+    color: #1B2A4A;
+    font-weight: 700;
+    border-left: 3px solid #C8A45A;
+}
+
+.nav-bar__dropdown-item svg {
+    flex-shrink: 0;
+    color: #5A6A8A;
+}
+
+.nav-bar__dropdown-item.active svg {
+    color: #C8A45A;
+}
+
+/* Placeholder page for upcoming schedules */
+.schedule-placeholder {
+    padding: 60px 32px;
+    text-align: center;
+}
+
+.schedule-placeholder__icon {
+    width: 80px;
+    height: 80px;
+    color: #D4A843;
+    margin: 0 auto 20px;
+    opacity: 0.5;
+}
+
+.schedule-placeholder__title {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1B2A4A;
+    margin-bottom: 12px;
+}
+
+.schedule-placeholder__text {
+    font-size: 0.9rem;
+    color: #5A6A8A;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 20px;
+    border-bottom: 3px double #C8A45A;
+    gap: 20px;
+}
+
+.header__logo {
+    flex-shrink: 0;
+}
+
+.header__logo-icon {
+    width: 76px;
+    height: 76px;
+}
+
+.header__center {
+    flex: 1;
+    text-align: center;
+}
+
+.header__title {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #1B2A4A;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.header__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #5A6A8A;
+    font-style: italic;
+    cursor: text;
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    outline: none;
+}
+
+.header__subtitle:hover,
+.header__subtitle:focus {
+    background: rgba(212, 168, 67, 0.1);
+}
+
+.header__badge {
+    flex-shrink: 0;
+}
+
+.header__badge-inner {
+    background: #1B2A4A;
+    color: #C8A45A;
+    padding: 12px 16px;
+    border-radius: 6px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.header__badge-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.header__badge-number {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #C8A45A;
+    cursor: text;
+    outline: none;
+}
+
+/* ===== TIME BAR ===== */
+.time-bar {
+    display: flex;
+    align-items: center;
+    padding: 14px 32px;
+    border-bottom: 1px solid rgba(212, 168, 67, 0.3);
+    background: #FEFCF7;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.time-bar__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-bar__icon {
+    width: 32px;
+    height: 32px;
+    color: #1B2A4A;
+}
+
+.time-bar__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1B2A4A;
+    white-space: nowrap;
+}
+
+.time-bar__controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.time-bar__day-input {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1B2A4A;
+    border: 2px solid #D4A843;
+    border-radius: 6px;
+    padding: 6px 14px;
+    background: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 180px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.time-bar__day-input:focus {
+    border-color: #C8A45A;
+    box-shadow: 0 0 0 3px rgba(200, 164, 90, 0.15);
+}
+
+.time-bar__time-select {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1B2A4A;
+    border: 2px solid #D4A843;
+    border-radius: 6px;
+    padding: 6px 12px;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.time-bar__time-select:focus {
+    border-color: #C8A45A;
+    box-shadow: 0 0 0 3px rgba(200, 164, 90, 0.15);
+}
+
+.time-bar__right {
+    margin-left: auto;
+}
+
+.time-bar__people-icon {
+    width: 36px;
+    height: 36px;
+    color: #1B2A4A;
+}
+
+/* ===== MONTH BLOCK ===== */
+.month-block {
+    border: 1px solid #D4A843;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
+    position: relative;
+
+    position: relative;
+    display: flex;
+    margin: 20px 24px;
+    border: 1px solid rgba(212, 168, 67, 0.25);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(27, 42, 74, 0.04);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.month-block:hover {
+    box-shadow: 0 4px 20px rgba(27, 42, 74, 0.08);
+}
+
+.month-block__delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(192, 57, 43, 0.08);
+    color: #c0392b;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+    opacity: 0;
+}
+
+.month-block:hover .month-block__delete-btn {
+    opacity: 1;
+}
+
+.month-block__delete-btn:hover {
+    background: #c0392b;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* Sidebar */
+.month-block__sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 16px;
+    min-width: 110px;
+    background: linear-gradient(180deg, #FEFCF7 0%, #FDF8F0 100%);
+    border-right: 1px solid rgba(212, 168, 67, 0.2);
+    gap: 6px;
+}
+
+.month-block__sun-icon {
+    width: 48px;
+    height: 48px;
+    color: #C8A45A;
+    margin-bottom: 4px;
+}
+
+.month-block__month-input,
+.month-block__year-input {
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    border: none;
+    border-bottom: 3px double #C8A45A;
+    background: transparent;
+    color: #1B2A4A;
+    outline: none;
+    padding: 4px 6px;
+    width: 90px;
+    transition: border-color 0.2s;
+}
+
+.month-block__month-input {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.month-block__year-input {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #5A6A8A;
+}
+
+.month-block__month-input:focus,
+.month-block__year-input:focus {
+    border-color: #C8A45A;
+}
+
+.month-block__month-input::placeholder,
+.month-block__year-input::placeholder {
+    color: #B0B8C8;
+    font-weight: 500;
+}
+
+/* Content area */
+.month-block__content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Table */
+.month-block__table {
+    width: 100%;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 36px 36px;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #1B2A4A;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.table-header span:nth-child(3),
+.table-header span:nth-child(4) {
+    /* spacer for icon + delete columns */
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 36px 36px;
+    gap: 8px;
+    padding: 6px 16px;
+    align-items: center;
+    border-bottom: 1px solid rgba(212, 168, 67, 0.12);
+    transition: background 0.15s;
+}
+
+.table-row:hover {
+    background: rgba(212, 168, 67, 0.04);
+}
+
+.table-row__date,
+.table-row__responsible {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #1B2A4A;
+    border: none;
+    border-bottom: 1.5px solid #D4A843;
+    background: transparent;
+    padding: 6px 4px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.table-row__date:focus,
+.table-row__responsible:focus {
+    border-color: #C8A45A;
+    border-bottom-width: 2px;
+}
+
+.table-row__date::placeholder,
+.table-row__responsible::placeholder {
+    color: #C0C8D8;
+}
+
+.table-row__person-icon {
+    width: 22px;
+    height: 22px;
+    color: #A0AAC0;
+    justify-self: center;
+}
+
+.table-row__delete-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: #D0A0A0;
+    font-size: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    justify-self: center;
+}
+
+.table-row__delete-btn:hover {
+    background: rgba(192, 57, 43, 0.1);
+    color: #c0392b;
+}
+
+.table-row__delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Add row button */
+.month-block__add-row-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-top: 1px solid rgba(212, 168, 67, 0.15);
+    background: transparent;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s, color 0.2s;
+}
+
+.month-block__add-row-btn:hover {
+    background: rgba(212, 168, 67, 0.08);
+    color: #A0842A;
+}
+
+/* ===== ADD MONTH BUTTON ===== */
+.add-month-btn {
+    display: block;
+    margin: 16px auto 28px;
+    padding: 12px 28px;
+    border: 2px dashed #D4A843;
+    border-radius: 8px;
+    background: transparent;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.add-month-btn:hover {
+    background: rgba(212, 168, 67, 0.08);
+    border-color: #C8A45A;
+    color: #A0842A;
+    transform: translateY(-1px);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    border-top: 2px solid #D4A843;
+    background: #F5F0E5;
+}
+
+.footer__quote-block {
+    display: flex;
+    align-items: center;
+    padding: 20px 32px;
+    gap: 20px;
+}
+
+.footer__book-icon {
+    flex-shrink: 0;
+}
+
+.footer__book-icon svg {
+    width: 56px;
+    height: 56px;
+}
+
+.footer__quote-text {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #1B2A4A;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.footer__quote-ref {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #5A6A8A;
+    margin-top: 4px;
+}
+
+.footer__illustration {
+    flex-shrink: 0;
+}
+
+.footer__illustration svg {
+    width: 160px;
+    height: 90px;
+}
+
+.footer__actions {
+    display: flex;
+    justify-content: center;
+    padding: 0 32px 20px;
+}
+
+.footer__export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border: 2px solid #1B2A4A;
+    border-radius: 6px;
+    background: #1B2A4A;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.footer__export-btn:hover {
+    background: #2C3E6B;
+    border-color: #2C3E6B;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(27, 42, 74, 0.2);
+}
+
+.footer__export-btn svg {
+    flex-shrink: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+    body {
+    background-color: #EFE6D5;
+    background-image: radial-gradient(#D4A843 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+
+        padding: 8px 2px;
+    }
+
+    .header {
+        flex-direction: column;
+        padding: 20px 16px;
+        text-align: center;
+    }
+
+    .header__title {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    .header__logo-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .header__badge-inner {
+        padding: 8px 12px;
+        min-width: 60px;
+    }
+
+    .header__badge-number {
+        font-size: 1.2rem;
+    }
+
+    .time-bar {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .time-bar__controls {
+        flex-wrap: wrap;
+    }
+
+    .time-bar__day-input {
+        min-width: 140px;
+        font-size: 0.8rem;
+    }
+
+    .month-block {
+    border: 1px solid #D4A843;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
+    position: relative;
+
+        flex-direction: column;
+        margin: 12px 12px;
+    }
+
+    .month-block__sidebar {
+        flex-direction: row;
+        min-width: unset;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(212, 168, 67, 0.2);
+        gap: 12px;
+    }
+
+    .month-block__sun-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 0;
+    }
+
+    .month-block__month-input,
+    .month-block__year-input {
+        width: 80px;
+    }
+
+    .table-header {
+        grid-template-columns: 1fr 1fr 28px 28px;
+        padding: 8px 10px;
+        font-size: 0.65rem;
+    }
+
+    .table-row {
+        grid-template-columns: 1fr 1fr 28px 28px;
+        padding: 4px 10px;
+        gap: 4px;
+    }
+
+    .table-row__date,
+    .table-row__responsible {
+        font-size: 0.8rem;
+        padding: 4px 2px;
+    }
+
+    .footer__quote-block {
+        flex-direction: column;
+        padding: 16px;
+        text-align: center;
+    }
+
+    .footer__illustration svg {
+        width: 120px;
+        height: 68px;
+    }
+
+    .add-month-btn {
+        margin: 12px auto 20px;
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== MEETING SCHEDULE (WEEKDAY & WEEKEND) ===== */
+.meeting-block {
+    margin: 20px 24px;
+    border: 1px solid rgba(212, 168, 67, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(27, 42, 74, 0.04);
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.meeting-block__delete-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: rgba(255,255,255,0.7);
+    color: #c0392b;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.meeting-block:hover .meeting-block__delete-btn { opacity: 1; }
+.meeting-block__delete-btn:hover { background: #c0392b; color: #fff; }
+
+/* Date header row */
+.meeting-date-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    padding: 8px 16px;
+    align-items: center;
+    font-weight: 600;
+}
+.meeting-date-header--weekday {
+    background: #B8D4E3;
+    color: #1B2A4A;
+}
+.meeting-date-header--weekend {
+    background: #8C9EAF;
+    color: #fff;
+}
+.meeting-date-header--weekend input[type="text"] {
+    background: transparent;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 2px 4px;
+    min-width: 60px;
+}
+.meeting-date-header--weekend input[type="text"]::placeholder {
+    color: rgba(255,255,255,0.55);
+}
+.meeting-date-header--weekend input[type="text"]:focus {
+    border-bottom-color: rgba(255,255,255,0.9);
+}
+.meeting-date-header__role {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: right;
+    white-space: nowrap;
+}
+.meeting-date-header__role--weekend {
+    color: rgba(255,255,255,0.9);
+}
+
+/* Section headers */
+.section-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+}
+.section-header--treasures { background: #C5A930; color: #1B2A4A; }
+.section-header--skills { background: #8B7D3C; color: #fff; }
+.section-header--life { background: #7A2020; color: #fff; }
+.section-header--talk { background: #2E6DA4; color: #fff; }
+.section-header--wt { background: #4CAF50; color: #fff; }
+.section-header__hall {
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* Meeting rows */
+.m-row {
+    display: grid;
+    grid-template-columns: 1.5fr auto 1fr 30px;
+    gap: 4px;
+    padding: 4px 16px;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    min-height: 32px;
+}
+.m-row:hover { background: rgba(212, 168, 67, 0.04); }
+
+.m-row--fixed {
+    color: #5A6A8A;
+    font-size: 0.8rem;
+}
+
+.m-row input {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: #1B2A4A;
+    border: none;
+    border-bottom: 1px solid #D4A843;
+    background: transparent;
+    padding: 3px 4px;
+    outline: none;
+    width: 100%;
+}
+.m-row input:focus { border-color: #C8A45A; border-bottom-width: 2px; }
+.m-row input::placeholder { color: #C0C8D8; font-size: 0.75rem; }
+
+textarea.m-textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: #1B2A4A;
+    border: none;
+    border-bottom: 1px solid #D4A843;
+    background: transparent;
+    padding: 3px 4px;
+    outline: none;
+    width: 100%;
+    resize: none;
+    height: auto;
+    min-height: 28px;
+    line-height: 1.25;
+    overflow-y: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+textarea.m-textarea:focus {
+    border-color: #C8A45A;
+    border-bottom-width: 2px;
+}
+textarea.m-textarea::placeholder {
+    color: #C0C8D8;
+    font-size: 0.75rem;
+}
+
+.m-row--weekday {
+    grid-template-columns: 1.5fr 1fr 30px !important;
+}
+
+.m-row__student-badge {
+    font-size: 0.65rem;
+    color: #C8A45A;
+    background: rgba(200, 164, 90, 0.08);
+    border: 1px solid rgba(200, 164, 90, 0.25);
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.export-pdf-btn--meeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 24px auto 16px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #C8A45A, #D4A843);
+    color: #1B2A4A;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(200, 164, 90, 0.3);
+}
+
+.export-pdf-btn--meeting:hover {
+    background: linear-gradient(135deg, #D4A843, #C8A45A);
+    box-shadow: 0 4px 12px rgba(200, 164, 90, 0.4);
+    transform: translateY(-1px);
+}
+
+.m-row__role {
+    font-size: 0.7rem;
+    color: #5A6A8A;
+    font-weight: 500;
+    text-align: right;
+    padding-right: 6px;
+    white-space: nowrap;
+}
+
+.m-row__delete {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: #D0A0A0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.8rem;
+}
+.m-row__delete:hover { color: #c0392b; background: rgba(192,57,43,0.1); }
+
+.section-add-btn {
+    display: block;
+    padding: 5px 16px;
+    border: none;
+    background: transparent;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+}
+.section-add-btn:hover { background: rgba(212,168,67,0.06); color: #A0842A; }
+
+.add-meeting-btn {
+    display: block;
+    margin: 16px auto 28px;
+    padding: 12px 28px;
+    border: 2px dashed #D4A843;
+    border-radius: 8px;
+    background: transparent;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+.add-meeting-btn:hover { background: rgba(212,168,67,0.08); color: #A0842A; }
+
+/* Weekend specific - wider topic column */
+.m-row--weekend {
+    grid-template-columns: auto 1.2fr auto 1fr 30px;
+}
+.m-row--weekend-simple {
+    grid-template-columns: 1.5fr auto 1fr 30px;
+}
+
+.m-row__time {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1B2A4A;
+    white-space: nowrap;
+    padding-right: 8px;
+}
+
+@media (max-width: 700px) {
+    .meeting-block { margin: 12px; }
+    .m-row { grid-template-columns: 1fr auto 1fr 24px; padding: 3px 10px; gap: 2px; }
+    .m-row--weekend { grid-template-columns: auto 1fr auto 1fr 24px; }
+    .m-row input { font-size: 0.75rem; }
+    .m-row__role { font-size: 0.65rem; }
+    .section-header { font-size: 0.7rem; padding: 5px 10px; }
+    .meeting-date-header { padding: 6px 10px; }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    body {
+    background-color: #EFE6D5;
+    background-image: radial-gradient(#D4A843 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+
+        background: #fff;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .app {
+    border: 4px double #C8A45A;
+    border-radius: 2px;
+    box-shadow: 0 15px 40px rgba(27, 42, 74, 0.15);
+    margin: 20px auto;
+    position: relative;
+
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+    }
+
+    .month-block__delete-btn,
+    .table-row__delete-btn,
+    .month-block__add-row-btn,
+    .add-month-btn,
+    .footer__actions,
+    .nav-bar,
+    .meeting-block__delete-btn,
+    .m-row__delete,
+    .section-add-btn,
+    .add-meeting-btn,
+    .export-pdf-btn--meeting {
+        display: none !important;
+    }
+
+    .month-block {
+    border: 1px solid #D4A843;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
+    position: relative;
+
+        break-inside: avoid;
+        box-shadow: none;
+        margin: 12px 16px;
+    }
+
+    .time-bar__day-input,
+    .time-bar__time-select,
+    .month-block__month-input,
+    .month-block__year-input,
+    .table-row__date,
+    .table-row__responsible,
+    textarea.m-textarea {
+        border-color: transparent !important;
+    }
+
+    .header__subtitle,
+    .header__badge-number {
+        cursor: default;
+    }
+
+    .footer__export-btn {
+        display: none !important;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.month-block {
+    border: 1px solid #D4A843;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
+    position: relative;
+
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* ===== ATTENDANTS SCHEDULE ===== */
+.att-section {
+    border: 1px solid #D4A843;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
+    padding: 16px;
+    position: relative;
+
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin: 20px auto;
+    max-width: 960px;
+    overflow: hidden;
+}
+.att-section__title {
+    background: #1B2A4A;
+    color: #C8A45A;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.att-table { padding: 0 0 4px; }
+.att-header {
+    display: grid;
+    background: #2C3E6B;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    gap: 4px;
+}
+.att-header--7col { grid-template-columns: 90px 1fr 1fr 1fr 1fr 1fr 32px; }
+.att-header--5col { grid-template-columns: 90px 1fr 1fr 1fr 32px; }
+.att-row {
+    display: grid;
+    gap: 4px;
+    padding: 4px 12px;
+    align-items: center;
+    border-bottom: 1px solid #f0ebe0;
+    transition: background 0.15s;
+}
+.att-row:hover { background: #fdf8f0; }
+.att-row--7col { grid-template-columns: 90px 1fr 1fr 1fr 1fr 1fr 32px; }
+.att-row--5col { grid-template-columns: 90px 1fr 1fr 1fr 32px; }
+.att-cell__input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #D4A843;
+    color: #1B2A4A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    padding: 3px 4px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+.att-cell__input:focus {
+    border-bottom-color: #1B2A4A;
+    background: rgba(200,164,90,0.06);
+}
+.att-cell__input::placeholder { color: #ccc; }
+.att-row__del {
+    background: none;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 4px;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+.att-row__del:hover { opacity: 1; background: rgba(192,57,43,0.08); }
+.att-row__del svg { width: 16px; height: 16px; }
+.att-add-btn {
+    display: block;
+    margin: 8px 12px 12px;
+    background: none;
+    border: 1.5px dashed #D4A843;
+    color: #C8A45A;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+.att-add-btn:hover { background: #C8A45A; color: #fff; border-color: #C8A45A; }
+.att-actions-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 12px 10px;
+}
+.att-import-btn {
+    background: none;
+    border: 1.5px dashed #3A5BA0;
+    color: #3A5BA0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+.att-import-btn:hover { background: #3A5BA0; color: #fff; }
+.att-import-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 16px auto 24px;
+    max-width: 960px;
+    padding: 0 4px;
+    flex-wrap: wrap;
+}
+.att-import-main-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #2C3E6B, #1B2A4A);
+    color: #C8A45A;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: opacity 0.2s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.att-import-main-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.att-import-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.4;
+    max-width: 400px;
+}
+@media print {
+    .att-row__del, .att-add-btn, .att-import-btn, .att-import-bar, .att-actions-bar { display: none !important; }
+    .att-cell__input { border-bottom-color: transparent; }
+}
+
+</style>
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- TOP NAV BAR -->
+        <nav class="nav-bar" id="navBar">
+            <div class="nav-bar__menu-wrapper">
+                <button class="nav-bar__menu-btn" id="menuBtn" onclick="toggleMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                        <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="nav-bar__current-label" id="currentScheduleLabel">Проповедническое служение</span>
+                    <svg class="nav-bar__chevron" viewBox="0 0 16 16" fill="none" width="14" height="14">
+                        <path d="M 4 6 L 8 10 L 12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="nav-bar__dropdown" id="menuDropdown">
+                    <button class="nav-bar__dropdown-item active" data-schedule="preaching" onclick="switchSchedule('preaching')">
+                        <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M3 3h14v14H3z" stroke="currentColor" stroke-width="1.5" rx="2"/><path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                        График встреч перед проповедническим служением
+                    </button>
+                    <button class="nav-bar__dropdown-item" data-schedule="weekends" onclick="switchSchedule('weekends')">
+                        <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Встречи собрания по выходным
+                    </button>
+                    <button class="nav-bar__dropdown-item" data-schedule="weekdays" onclick="switchSchedule('weekdays')">
+                        <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14" stroke="currentColor" stroke-width="1.5"/><path d="M7 2v4M13 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Встречи собрания по будням
+                    </button>
+                    <button class="nav-bar__dropdown-item" data-schedule="attendants" onclick="switchSchedule('attendants')">
+                        <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 18c0-3 2-5 5-5h6c3 0 5 2 5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                        График служения распорядителей
+                    </button>
+                </div>
+            </div>
+            <!-- LANGUAGE SWITCHER -->
+            <div class="lang-switcher" id="langWrapper">
+                <button class="lang-switcher__btn" onclick="toggleLangMenu()">
+                    <svg viewBox="0 0 20 20" fill="none" width="16" height="16">
+                        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                        <ellipse cx="10" cy="10" rx="4" ry="8" stroke="currentColor" stroke-width="1.2"/>
+                        <line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="1.2"/>
+                    </svg>
+                    <span id="currentLangLabel">RU</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-dropdown__item active" data-lang="ru" onclick="switchLanguage('ru')">🇷🇺 Русский</button>
+                    <button class="lang-dropdown__item" data-lang="uk" onclick="switchLanguage('uk')">🇺🇦 Українська</button>
+                    <button class="lang-dropdown__item" data-lang="ro" onclick="switchLanguage('ro')">🇷🇴 Română</button>
+                    <button class="lang-dropdown__item" data-lang="en" onclick="switchLanguage('en')">🇬🇧 English</button>
+                </div>
+            </div>
+        </nav>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header__logo-spacer" style="width: 76px;"></div>
+            <div class="header__center">
+                <h1 class="header__title">ГРАФИК ВСТРЕЧ<br>ПЕРЕД ПРОПОВЕДНИЧЕСКИМ<br>СЛУЖЕНИЕМ</h1>
+                <p class="header__subtitle" id="groupName" contenteditable="true">Собрание «Нижняя Апша - Молодежная»</p>
+            </div>
+            <div class="header__badge">
+                <div class="header__badge-inner">
+                    <span class="header__badge-label">ГРУППА</span>
+                    <span class="header__badge-number" id="groupNumber" contenteditable="true">№3</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- DYNAMIC CONTENT -->
+        <div id="app-content">
+            <!-- Rendered by JavaScript -->
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer__quote-block">
+                <div class="footer__book-icon">
+                    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="5" width="50" height="50" rx="5" stroke="#1B2A4A" stroke-width="2" fill="#1B2A4A" fill-opacity="0.08"/>
+                        <rect x="12" y="12" width="18" height="28" rx="2" stroke="#1B2A4A" stroke-width="1.5" fill="#C8A45A" fill-opacity="0.2"/>
+                        <rect x="30" y="12" width="18" height="28" rx="2" stroke="#1B2A4A" stroke-width="1.5" fill="#C8A45A" fill-opacity="0.2"/>
+                        <line x1="30" y1="12" x2="30" y2="40" stroke="#1B2A4A" stroke-width="1.5"/>
+                        <line x1="16" y1="18" x2="26" y2="18" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <line x1="16" y1="22" x2="26" y2="22" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <line x1="16" y1="26" x2="26" y2="26" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <line x1="34" y1="18" x2="44" y2="18" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <line x1="34" y1="22" x2="44" y2="22" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <line x1="34" y1="26" x2="44" y2="26" stroke="#1B2A4A" stroke-width="1" opacity="0.5"/>
+                        <!-- Number 3 -->
+                        <text x="30" y="55" text-anchor="middle" font-family="Playfair Display, serif" font-size="10" font-weight="bold" fill="#1B2A4A">3</text>
+                    </svg>
+                </div>
+                <div class="footer__quote-text">
+                    <p>«Поэтому идите и во всех народах<br>подготавливайте учеников...»</p>
+                    <p class="footer__quote-ref">(Матфея 28:19)</p>
+                </div>
+                <div class="footer__illustration">
+                    <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Mountains -->
+                        <path d="M 0 100 L 40 30 L 60 55 L 90 15 L 120 50 L 140 35 L 180 100 Z" fill="#1B2A4A" fill-opacity="0.08" stroke="#1B2A4A" stroke-width="1.5"/>
+                        <path d="M 20 100 L 60 45 L 80 60 L 100 40 L 130 100 Z" fill="#C8A45A" fill-opacity="0.1" stroke="#C8A45A" stroke-width="1"/>
+                        <!-- Sun -->
+                        <circle cx="145" cy="25" r="12" fill="#C8A45A" fill-opacity="0.3" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="145" y1="8" x2="145" y2="3" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="145" y1="42" x2="145" y2="47" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="128" y1="25" x2="123" y2="25" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="162" y1="25" x2="167" y2="25" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="133" y1="13" x2="129" y2="9" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="157" y1="37" x2="161" y2="41" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="157" y1="13" x2="161" y2="9" stroke="#C8A45A" stroke-width="1.5"/>
+                        <line x1="133" y1="37" x2="129" y2="41" stroke="#C8A45A" stroke-width="1.5"/>
+                        <!-- Trees -->
+                        <line x1="15" y1="100" x2="15" y2="75" stroke="#1B2A4A" stroke-width="1.5"/>
+                        <path d="M 5 80 L 15 60 L 25 80 Z" fill="#1B2A4A" fill-opacity="0.12" stroke="#1B2A4A" stroke-width="1"/>
+                        <path d="M 8 90 L 15 70 L 22 90 Z" fill="#1B2A4A" fill-opacity="0.08" stroke="#1B2A4A" stroke-width="1"/>
+                        <!-- Water ripples -->
+                        <path d="M 0 95 Q 20 90 40 95 Q 60 100 80 95 Q 100 90 120 95 Q 140 100 160 95 Q 170 92 180 95" stroke="#3A5BA0" stroke-width="0.8" fill="none" opacity="0.4"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="footer__actions">
+                <button class="footer__export-btn" id="exportPdfBtn" onclick="exportToPDF()">
+                    <svg viewBox="0 0 20 20" fill="none" width="18" height="18">
+                        <path d="M 3 14 L 3 17 L 17 17 L 17 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 10 3 L 10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M 6 9 L 10 13 L 14 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Экспорт в PDF
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+'use strict';
+
+// ===== INTERNATIONALIZATION =====
+let currentLang = 'ru';
+
+const LANGS = {
+    ru: { code: 'ru', label: 'RU', flag: '🇷🇺', name: 'Русский' },
+    uk: { code: 'uk', label: 'UA', flag: '🇺🇦', name: 'Українська' },
+    ro: { code: 'ro', label: 'RO', flag: '🇷🇴', name: 'Română' },
+    en: { code: 'en', label: 'EN', flag: '🇬🇧', name: 'English' },
+};
+
+const T = {
+    ru: {
+        appTitle: 'ГРАФИК ВСТРЕЧ<br>ПЕРЕД ПРОПОВЕДНИЧЕСКИМ<br>СЛУЖЕНИЕМ',
+        groupLabel: 'ГРУППА',
+        timeLabel: 'ВРЕМЯ ПРОВЕДЕНИЯ:',
+        dateCol: 'ДАТА',
+        responsibleCol: 'ОТВЕТСТВЕННЫЙ',
+        addRow: '+ Добавить строку',
+        addMonth: '+ Добавить месяц',
+        addMeeting: '+ Добавить встречу',
+        monthPh: 'МЕСЯЦ',
+        yearPh: 'ГОД',
+        datePh: 'дд.мм',
+        datePhFull: 'дд.мм.гггг',
+        namePh: 'Имя ответственного',
+        exportPdf: 'Экспорт в PDF',
+        quoteText: '«Поэтому идите и во всех народах<br>подготавливайте учеников...»',
+        quoteRef: '(Матфея 28:19)',
+        deleteRowConfirm: 'Удалить эту строку? Данные будут потеряны.',
+        deleteMonthConfirm: 'Удалить этот месяц и все его данные?',
+        deleteMeetingConfirm: 'Удалить эту встречу и все её данные?',
+        deleteRowBtn: 'Удалить строку',
+        deleteMonthBtn: 'Удалить месяц',
+        deleteMeetingBtn: 'Удалить встречу',
+        schedPreaching: 'Проповедническое служение',
+        schedPreachingFull: 'График встреч перед проповедническим служением',
+        schedWeekends: 'Встречи по выходным',
+        schedWeekendsFull: 'Встречи собрания по выходным',
+        schedWeekdays: 'Встречи по будням',
+        schedWeekdaysFull: 'Встречи собрания по будням',
+        chairmanWeekday: 'Председатель встречи:',
+        chairmanWeekend: 'Председатель<br>публичной встречи:',
+        song: 'Песня №',
+        introWords: 'Вступительные слова (1 мин.)',
+        treasures: 'СОКРОВИЩА ИЗ СЛОВА БОГА',
+        mainHall: 'Главный зал',
+        skills: 'ОТТАЧИВАЕМ НАВЫКИ СЛУЖЕНИЯ',
+        christianLife: 'ХРИСТИАНСКАЯ ЖИЗНЬ',
+        bibleStudy: 'Изучение Библии в собрании (30 мин.)',
+        bibleStudyRole: 'Ведущий/Чтец',
+        closingWords: 'Заключительные слова (3 мин.)',
+        prayer: 'Молитва:',
+        topicPh: 'Тема / задание',
+        rolePh: 'Роль',
+        nameSimplePh: 'Имя',
+        namesPh: 'Имена',
+        publicTalk: 'ПУБЛИЧНАЯ РЕЧЬ',
+        talkTopicPh: '* Тема речи',
+        speaker: 'Докладчик:',
+        wtStudy: 'ИЗУЧЕНИЕ СТОРОЖЕВОЙ БАШНИ',
+        wtLeaderRole: 'Ведущий/чтец',
+        student: 'Учащийся',
+        studentHelper: 'Учащийся/Помощник',
+        schedAttendants: 'Служение распорядителей',
+        schedAttendantsFull: 'График служения распорядителей и озвучивания',
+        attendantsTitle: 'График служения распорядителей',
+        soundTitle: 'Служба озвучивания',
+        colEntrance: 'Вход в здание',
+        colHall: 'Вход в зал',
+        colMic1: 'Микрофон 1',
+        colMic2: 'Микрофон 2',
+        colVentilation: 'Проветривание',
+        colAudio: 'Аудио',
+        colVideo: 'Видео',
+        colZoom: 'Зум',
+        addAttRow: '+ Добавить строку',
+        deleteAttRowConfirm: 'Удалить эту строку?',
+        importExcel: 'Импорт из Excel',
+        importExcelFull: 'Импортировать данные из файла Excel (.xlsx)',
+        importExcelHint: 'Файл должен иметь 2 таблицы: сначала распорядители, затем озвучивание ',
+    },
+    uk: {
+        appTitle: 'ГРАФІК ЗУСТРІЧЕЙ<br>ПЕРЕД ПРОПОВІДНИЦЬКИМ<br>СЛУЖІННЯМ',
+        groupLabel: 'ГРУПА',
+        timeLabel: 'ЧАС ПРОВЕДЕННЯ:',
+        dateCol: 'ДАТА',
+        responsibleCol: 'ВІДПОВІДАЛЬНИЙ',
+        addRow: '+ Додати рядок',
+        addMonth: '+ Додати місяць',
+        addMeeting: '+ Додати зустріч',
+        monthPh: 'МІСЯЦЬ',
+        yearPh: 'РІК',
+        datePh: 'дд.мм',
+        datePhFull: 'дд.мм.рррр',
+        namePh: "Ім'я відповідального",
+        exportPdf: 'Експорт у PDF',
+        quoteText: '«Тому йдіть і в усіх народах<br>готуйте учнів...»',
+        quoteRef: '(Матвія 28:19)',
+        deleteRowConfirm: 'Видалити цей рядок? Дані буде втрачено.',
+        deleteMonthConfirm: 'Видалити цей місяць і всі його дані?',
+        deleteMeetingConfirm: 'Видалити цю зустріч і всі її дані?',
+        deleteRowBtn: 'Видалити рядок',
+        deleteMonthBtn: 'Видалити місяць',
+        deleteMeetingBtn: 'Видалити зустріч',
+        schedPreaching: 'Проповідницьке служіння',
+        schedPreachingFull: 'Графік зустрічей перед проповідницьким служінням',
+        schedWeekends: 'Зустрічі по вихідних',
+        schedWeekendsFull: 'Зустрічі зібрання по вихідних',
+        schedWeekdays: 'Зустрічі по буднях',
+        schedWeekdaysFull: 'Зустрічі зібрання по буднях',
+        chairmanWeekday: 'Голова зустрічі:',
+        chairmanWeekend: 'Голова<br>публічної зустрічі:',
+        song: 'Пісня №',
+        introWords: 'Вступні слова (1 хв.)',
+        treasures: 'СКАРБИ ЗІ СЛОВА БОГА',
+        mainHall: 'Головний зал',
+        skills: 'ВІДТОЧУЄМО НАВИЧКИ СЛУЖІННЯ',
+        christianLife: 'ХРИСТИЯНСЬКЕ ЖИТТЯ',
+        bibleStudy: 'Вивчення Біблії у зібранні (30 хв.)',
+        bibleStudyRole: 'Ведучий/Читець',
+        closingWords: 'Заключні слова (3 хв.)',
+        prayer: 'Молитва:',
+        topicPh: 'Тема / завдання',
+        rolePh: 'Роль',
+        nameSimplePh: "Ім'я",
+        namesPh: 'Імена',
+        publicTalk: 'ПУБЛІЧНА ПРОМОВА',
+        talkTopicPh: '* Тема промови',
+        speaker: 'Доповідач:',
+        wtStudy: 'ВИВЧЕННЯ СТОРОЖОВОЇ ВЕЖІ',
+        wtLeaderRole: 'Ведучий/читець',
+        student: 'Учень',
+        studentHelper: 'Учень/Помічник',
+        schedAttendants: 'Обслуговуючі',
+        schedAttendantsFull: 'Графік служіння обслуговуючих і озвучування',
+        attendantsTitle: 'Графік служіння обслуговуючих',
+        soundTitle: 'Служба озвучування',
+        colEntrance: 'Вхід у будівлю',
+        colHall: 'Вхід у зал',
+        colMic1: 'Мікрофон 1',
+        colMic2: 'Мікрофон 2',
+        colVentilation: 'Провітрювання',
+        colAudio: 'Аудіо',
+        colVideo: 'Відео',
+        colZoom: 'Зум',
+        addAttRow: '+ Додати рядок',
+        deleteAttRowConfirm: 'Видалити цей рядок?',
+        importExcel: 'Імпорт з Excel',
+        importExcelFull: 'Імпортувати дані з файлу Excel (.xlsx)',
+        importExcelHint: 'Файл має мати 2 таблиці: спочатку обслуговуючі, потім озвучування ',
+    },
+    ro: {
+        appTitle: 'PROGRAMUL ÎNTÂLNIRILOR<br>ÎNAINTE DE SERVICIUL<br>DE PREDICARE',
+        groupLabel: 'GRUPA',
+        timeLabel: 'ORA DESFĂȘURĂRII:',
+        dateCol: 'DATA',
+        responsibleCol: 'RESPONSABIL',
+        addRow: '+ Adaugă rând',
+        addMonth: '+ Adaugă lună',
+        addMeeting: '+ Adaugă întâlnire',
+        monthPh: 'LUNA',
+        yearPh: 'ANUL',
+        datePh: 'zz.ll',
+        datePhFull: 'zz.ll.aaaa',
+        namePh: 'Numele responsabilului',
+        exportPdf: 'Export PDF',
+        quoteText: '«De aceea, mergeți și faceți<br>ucenici din toate națiunile...»',
+        quoteRef: '(Matei 28:19)',
+        deleteRowConfirm: 'Ștergeți acest rând? Datele vor fi pierdute.',
+        deleteMonthConfirm: 'Ștergeți această lună și toate datele ei?',
+        deleteMeetingConfirm: 'Ștergeți această întâlnire și toate datele ei?',
+        deleteRowBtn: 'Șterge rândul',
+        deleteMonthBtn: 'Șterge luna',
+        deleteMeetingBtn: 'Șterge întâlnirea',
+        schedPreaching: 'Serviciul de predicare',
+        schedPreachingFull: 'Programul întâlnirilor înainte de serviciul de predicare',
+        schedWeekends: 'Întâlniri de weekend',
+        schedWeekendsFull: 'Întâlnirile congregației în weekend',
+        schedWeekdays: 'Întâlniri în cursul săptămânii',
+        schedWeekdaysFull: 'Întâlnirile congregației în cursul săptămânii',
+        chairmanWeekday: 'Președintele întâlnirii:',
+        chairmanWeekend: 'Președintele<br>întâlnirii publice:',
+        song: 'Cântarea nr.',
+        introWords: 'Cuvinte introductive (1 min.)',
+        treasures: 'COMORI DIN CUVÂNTUL LUI DUMNEZEU',
+        mainHall: 'Sala principală',
+        skills: 'SĂ FIM MAI EFICIENȚI ÎN PREDICARE',
+        christianLife: 'VIAȚA CREȘTINĂ',
+        bibleStudy: 'Studiul Bibliei în congregație (30 min.)',
+        bibleStudyRole: 'Conducător/Cititor',
+        closingWords: 'Cuvinte de încheiere (3 min.)',
+        prayer: 'Rugăciunea:',
+        topicPh: 'Tema / sarcina',
+        rolePh: 'Rolul',
+        nameSimplePh: 'Numele',
+        namesPh: 'Numele',
+        publicTalk: 'DISCURSUL PUBLIC',
+        talkTopicPh: '* Tema discursului',
+        speaker: 'Vorbitorul:',
+        wtStudy: 'STUDIUL TURNULUI DE VEGHE',
+        wtLeaderRole: 'Conducător/cititor',
+        student: 'Elev',
+        studentHelper: 'Elev/Ajutor',
+        schedAttendants: 'Oameni de ordine',
+        schedAttendantsFull: 'Programul oamenilor de ordine și sonorizării',
+        attendantsTitle: 'OAMENI DE ORDINE',
+        soundTitle: 'Serviciul de sonorizare',
+        colEntrance: 'Intrare clădire',
+        colHall: 'Intrare sală',
+        colMic1: 'Microfon 1',
+        colMic2: 'Microfon 2',
+        colVentilation: 'Aerisire',
+        colAudio: 'Audio',
+        colVideo: 'Video',
+        colZoom: 'Zoom',
+        addAttRow: '+ Adaugă rând',
+        deleteAttRowConfirm: 'Ștergeți acest rând?',
+        importExcel: 'Import din Excel',
+        importExcelFull: 'Importați date din fișier Excel (.xlsx)',
+        importExcelHint: 'Fișierul trebuie să conțină 2 tabele: mai întâi oamenii de ordine, apoi sonorizarea',
+    },
+    en: {
+        appTitle: 'MEETING SCHEDULE<br>BEFORE PREACHING<br>SERVICE',
+        groupLabel: 'GROUP',
+        timeLabel: 'MEETING TIME:',
+        dateCol: 'DATE',
+        responsibleCol: 'RESPONSIBLE',
+        addRow: '+ Add row',
+        addMonth: '+ Add month',
+        addMeeting: '+ Add meeting',
+        monthPh: 'MONTH',
+        yearPh: 'YEAR',
+        datePh: 'dd.mm',
+        datePhFull: 'dd.mm.yyyy',
+        namePh: 'Responsible person',
+        exportPdf: 'Export to PDF',
+        quoteText: '"Therefore, go and make<br>disciples of all nations..."',
+        quoteRef: '(Matthew 28:19)',
+        deleteRowConfirm: 'Delete this row? Data will be lost.',
+        deleteMonthConfirm: 'Delete this month and all its data?',
+        deleteMeetingConfirm: 'Delete this meeting and all its data?',
+        deleteRowBtn: 'Delete row',
+        deleteMonthBtn: 'Delete month',
+        deleteMeetingBtn: 'Delete meeting',
+        schedPreaching: 'Preaching service',
+        schedPreachingFull: 'Meeting schedule before preaching service',
+        schedWeekends: 'Weekend meetings',
+        schedWeekendsFull: 'Congregation weekend meetings',
+        schedWeekdays: 'Weekday meetings',
+        schedWeekdaysFull: 'Congregation weekday meetings',
+        chairmanWeekday: 'Meeting chairman:',
+        chairmanWeekend: 'Public meeting<br>chairman:',
+        song: 'Song #',
+        introWords: 'Opening comments (1 min.)',
+        treasures: 'TREASURES FROM GOD\'S WORD',
+        mainHall: 'Main hall',
+        skills: 'APPLY YOURSELF TO THE FIELD MINISTRY',
+        christianLife: 'LIVING AS CHRISTIANS',
+        bibleStudy: 'Congregation Bible Study (30 min.)',
+        bibleStudyRole: 'Conductor/Reader',
+        closingWords: 'Concluding comments (3 min.)',
+        prayer: 'Prayer:',
+        topicPh: 'Topic / assignment',
+        rolePh: 'Role',
+        nameSimplePh: 'Name',
+        namesPh: 'Names',
+        publicTalk: 'PUBLIC TALK',
+        talkTopicPh: '* Talk topic',
+        speaker: 'Speaker:',
+        wtStudy: 'WATCHTOWER STUDY',
+        wtLeaderRole: 'Conductor/reader',
+        student: 'Student',
+        studentHelper: 'Student/Assistant',
+        schedAttendants: 'Attendants',
+        schedAttendantsFull: 'Attendants & Sound Service Schedule',
+        attendantsTitle: 'ATTENDANTS',
+        soundTitle: 'Sound Service',
+        colEntrance: 'Building Entrance',
+        colHall: 'Hall Entrance',
+        colMic1: 'Microphone 1',
+        colMic2: 'Microphone 2',
+        colVentilation: 'Ventilation',
+        colAudio: 'Audio',
+        colVideo: 'Video',
+        colZoom: 'Zoom',
+        addAttRow: '+ Add row',
+        deleteAttRowConfirm: 'Delete this row?',
+        importExcel: 'Import from Excel',
+        importExcelFull: 'Import data from Excel file (.xlsx)',
+        importExcelHint: 'File must have 2 tables: attendants first, then sound service ',
+    },
+};
+
+function t(key) { return (T[currentLang] && T[currentLang][key]) || T.ru[key] || key; }
+
+// ===== SCHEDULE TYPES =====
+function getScheduleTypes() {
+    return {
+        preaching: {
+            key: 'meetingScheduleData',
+            label: t('schedPreaching'),
+            fullLabel: t('schedPreachingFull')
+        },
+        weekends: {
+            key: 'weekendScheduleData',
+            label: t('schedWeekends'),
+            fullLabel: t('schedWeekendsFull')
+        },
+        weekdays: {
+            key: 'weekdayScheduleData',
+            label: t('schedWeekdays'),
+            fullLabel: t('schedWeekdaysFull')
+        },
+        attendants: {
+            key: 'attendantsScheduleData',
+            label: t('schedAttendants'),
+            fullLabel: t('schedAttendantsFull')
+        }
+    };
+}
+let SCHEDULE_TYPES = getScheduleTypes();
+
+let currentSchedule = 'preaching';
+
+// ===== SVG ICONS =====
+const ICONS = {
+    clock: `<svg class="time-bar__icon" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="2"/>
+        <path d="M 16 8 L 16 16 L 22 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+    </svg>`,
+    people: `<svg class="time-bar__icon-people" viewBox="0 0 40 32" fill="none">
+        <circle cx="14" cy="10" r="5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M 4 28 C 4 20 10 17 14 17 C 18 17 24 20 24 28" stroke="currentColor" stroke-width="1.8" fill="none"/>
+        <circle cx="26" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M 20 28 C 20 22 23 19 26 19 C 29 19 32 22 32 28" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>`,
+    sun: `<svg class="month-block__sun-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
+        <line x1="24" y1="4" x2="24" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="36" x2="24" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="36" y1="24" x2="44" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9.9" y1="9.9" x2="15.5" y2="15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32.5" y1="32.5" x2="38.1" y2="38.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9.9" y1="38.1" x2="15.5" y2="32.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32.5" y1="15.5" x2="38.1" y2="9.9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>`,
+    person: `<svg class="table-row__person-icon" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M 4 22 C 4 16 8 13 12 13 C 16 13 20 16 20 22" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>`,
+    trash: `<svg class="table-row__trash-icon" viewBox="0 0 20 20" fill="none">
+        <path d="M 4 6 L 16 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M 8 3 L 12 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M 5 6 L 6 17 L 14 17 L 15 6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <line x1="9" y1="9" x2="9" y2="14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="11" y1="9" x2="11" y2="14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>`,
+    pdf: `<svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+        <path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.5"/>
+        <text x="7" y="18" font-size="7" font-weight="bold" fill="currentColor" font-family="sans-serif">PDF</text>
+    </svg>`,
+    book: `<svg class="footer__book-icon" viewBox="0 0 40 40" fill="none">
+        <path d="M 6 8 C 6 6 8 4 10 4 L 30 4 C 32 4 34 6 34 8 L 34 32 C 34 34 32 36 30 36 L 10 36 C 8 36 6 34 6 32 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        <path d="M 12 4 L 12 36" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M 16 12 L 28 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 16 16 L 28 16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 16 20 L 24 20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>`,
+};
+
+// ===== DATA MODEL =====
+const DEFAULT_DATA = {
+    groupName: 'Собрание «Нижняя Апша - Молодежная»',
+    groupNumber: '3',
+    meetingDay: 'ПО ПЯТНИЦАМ В',
+    meetingTime: '19:30',
+    months: []
+};
+
+let data = null;
+
+function generateId() {
+    return crypto.randomUUID();
+}
+
+function createEmptyRow() {
+    return { id: generateId(), date: '', responsible: '' };
+}
+
+function createEmptyMonth() {
+    const month = {
+        id: generateId(),
+        name: '',
+        year: '',
+        rows: []
+    };
+    for (let i = 0; i < 5; i++) {
+        month.rows.push(createEmptyRow());
+    }
+    return month;
+}
+
+// ===== DATA PERSISTENCE =====
+function loadData() {
+    const storageKey = SCHEDULE_TYPES[currentSchedule].key;
+    try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+            data = JSON.parse(stored);
+            return;
+        }
+    } catch (e) {
+        console.warn('Failed to load data from localStorage:', e);
+    }
+    // Create default data with 2 month blocks
+    data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    data.months.push(createEmptyMonth());
+    data.months.push(createEmptyMonth());
+}
+
+function saveData() {
+    const storageKey = SCHEDULE_TYPES[currentSchedule].key;
+    try {
+        localStorage.setItem(storageKey, JSON.stringify(data));
+    } catch (e) {
+        console.warn('Failed to save data to localStorage:', e);
+    }
+}
+
+// ===== RENDERING =====
+function generateTimeOptions(selected) {
+    let html = '';
+    for (let h = 6; h <= 23; h++) {
+        for (let m = 0; m < 60; m += 30) {
+            const timeStr = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+            const isSelected = timeStr === selected ? ' selected' : '';
+            html += `<option value="${timeStr}"${isSelected}>${timeStr}</option>`;
+        }
+    }
+    return html;
+}
+
+function renderRow(row, monthId) {
+    return `
+        <div class="table-row" data-row-id="${row.id}" data-month-id="${monthId}">
+            <input type="text" class="table-row__date" 
+                value="${escapeHtml(row.date)}" 
+                placeholder="${t('datePh')}" 
+                data-field="date" 
+                data-row-id="${row.id}" 
+                data-month-id="${monthId}">
+            <input type="text" class="table-row__responsible" 
+                value="${escapeHtml(row.responsible)}" 
+                placeholder="${t('namePh')}" 
+                data-field="responsible" 
+                data-row-id="${row.id}" 
+                data-month-id="${monthId}">
+            ${ICONS.person}
+            <button class="table-row__delete-btn" 
+                data-action="delete-row" 
+                data-row-id="${row.id}" 
+                data-month-id="${monthId}" 
+                title="${t('deleteRowBtn')}">
+                ${ICONS.trash}
+            </button>
+        </div>`;
+}
+
+function renderMonth(month) {
+    const rowsHtml = month.rows.map(row => renderRow(row, month.id)).join('');
+
+    return `
+        <div class="month-block" data-month-id="${month.id}">
+            <button class="month-block__delete-btn" 
+                data-action="delete-month" 
+                data-month-id="${month.id}" 
+                title="${t('deleteMonthBtn')}">×</button>
+            <div class="month-block__sidebar">
+                ${ICONS.sun}
+                <input type="text" class="month-block__month-input" 
+                    placeholder="${t('monthPh')}" 
+                    value="${escapeHtml(month.name)}" 
+                    data-month-id="${month.id}" 
+                    data-field="name">
+                <input type="text" class="month-block__year-input" 
+                    placeholder="${t('yearPh')}" 
+                    value="${escapeHtml(month.year)}" 
+                    data-month-id="${month.id}" 
+                    data-field="year">
+            </div>
+            <div class="month-block__content">
+                <div class="month-block__table">
+                    <div class="table-header">
+                        <span>${t('dateCol')}</span>
+                        <span>${t('responsibleCol')}</span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    ${rowsHtml}
+                </div>
+                <button class="month-block__add-row-btn" 
+                    data-action="add-row" 
+                    data-month-id="${month.id}">${t('addRow')}</button>
+            </div>
+        </div>`;
+}
+
+function render() {
+    const container = document.getElementById('app-content');
+    if (!container) return;
+
+    let html = `
+        <div class="time-bar">
+            <div class="time-bar__left">
+                ${ICONS.clock}
+                <span class="time-bar__label">${t('timeLabel')}</span>
+            </div>
+            <div class="time-bar__controls">
+                <input type="text" class="time-bar__day-input" 
+                    value="${escapeHtml(data.meetingDay)}" 
+                    data-field="meetingDay">
+                <select class="time-bar__time-select" data-field="meetingTime">
+                    ${generateTimeOptions(data.meetingTime)}
+                </select>
+            </div>
+            <div class="time-bar__right">
+                ${ICONS.people}
+            </div>
+        </div>`;
+
+    for (const month of data.months) {
+        html += renderMonth(month);
+    }
+
+    html += `
+        <button class="add-month-btn" data-action="add-month">${t('addMonth')}</button>`;
+
+    container.innerHTML = html;
+}
+
+// ===== UTILITY =====
+function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function findMonthById(id) {
+    return data.months.find(m => m.id === id) || null;
+}
+
+function findRowInMonth(month, rowId) {
+    return month.rows.find(r => r.id === rowId) || null;
+}
+
+// ===== SAVE & RENDER =====
+function saveAndRender() {
+    saveData();
+    render();
+}
+
+// ===== AUTO-RESIZE TEXTAREA =====
+function autoResizeTextareas() {
+    const textareas = document.querySelectorAll('textarea.m-textarea');
+    textareas.forEach(ta => {
+        ta.style.height = 'auto';
+        ta.style.height = ta.scrollHeight + 'px';
+    });
+}
+
+// ===== EVENT HANDLERS =====
+function handleInput(e) {
+    const target = e.target;
+    const field = target.dataset.field;
+    if (!field) return;
+
+    const monthId = target.dataset.monthId;
+    const rowId = target.dataset.rowId;
+
+    if (field === 'meetingDay' || field === 'meetingTime') {
+        data[field] = target.value;
+        saveData();
+        return;
+    }
+
+    if (monthId && !rowId && (field === 'name' || field === 'year')) {
+        const month = findMonthById(monthId);
+        if (month) {
+            month[field] = target.value;
+            saveData();
+        }
+        return;
+    }
+
+    if (monthId && rowId && (field === 'date' || field === 'responsible')) {
+        const month = findMonthById(monthId);
+        if (month) {
+            const row = findRowInMonth(month, rowId);
+            if (row) {
+                row[field] = target.value;
+                saveData();
+            }
+        }
+        return;
+    }
+}
+
+function handleClick(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+
+    const action = btn.dataset.action;
+    const monthId = btn.dataset.monthId;
+    const rowId = btn.dataset.rowId;
+
+    switch (action) {
+        case 'add-row': {
+            const month = findMonthById(monthId);
+            if (month) {
+                month.rows.push(createEmptyRow());
+                saveAndRender();
+            }
+            break;
+        }
+
+        case 'delete-row': {
+            const month = findMonthById(monthId);
+            if (month) {
+                const row = findRowInMonth(month, rowId);
+                if (row) {
+                    const hasData = row.date.trim() || row.responsible.trim();
+                    if (hasData) {
+                        if (!confirm(t('deleteRowConfirm'))) {
+                            return;
+                        }
+                    }
+                    month.rows = month.rows.filter(r => r.id !== rowId);
+                    saveAndRender();
+                }
+            }
+            break;
+        }
+
+        case 'add-month': {
+            data.months.push(createEmptyMonth());
+            saveAndRender();
+            setTimeout(() => {
+                const blocks = document.querySelectorAll('.month-block');
+                if (blocks.length > 0) {
+                    blocks[blocks.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+            break;
+        }
+
+        case 'delete-month': {
+            const month = findMonthById(monthId);
+            if (month) {
+                const hasAnyData = month.name.trim() || month.year.trim() ||
+                    month.rows.some(r => r.date.trim() || r.responsible.trim());
+                if (hasAnyData) {
+                    if (!confirm(t('deleteMonthConfirm'))) {
+                        return;
+                    }
+                }
+                data.months = data.months.filter(m => m.id !== monthId);
+                saveAndRender();
+            }
+            break;
+        }
+    }
+}
+
+function handleHeaderInput() {
+    const groupNameEl = document.getElementById('groupName');
+    const groupNumberEl = document.getElementById('groupNumber');
+
+    if (groupNameEl) {
+        data.groupName = groupNameEl.textContent.trim();
+    }
+    if (groupNumberEl) {
+        data.groupNumber = groupNumberEl.textContent.trim();
+    }
+    saveData();
+}
+
+// ===== WEEKDAY SCHEDULE =====
+function createWeekdayRow() {
+    return { id: generateId(), topic: '', role: '', name: '' };
+}
+
+function createWeekdayMeeting() {
+    return {
+        id: generateId(),
+        date: '',
+        chairman: '',
+        openingSong: '',
+        openingSongName: '',
+        treasures: [
+            { id: generateId(), topic: '', role: '', name: '' },
+            { id: generateId(), topic: '', role: '', name: '' },
+            { id: generateId(), topic: '', role: 'Учащийся', name: '' },
+        ],
+        skills: [
+            { id: generateId(), topic: '', role: 'Учащийся/Помощник', name: '' },
+            { id: generateId(), topic: '', role: 'Учащийся/Помощник', name: '' },
+            { id: generateId(), topic: '', role: 'Учащийся/Помощник', name: '' },
+        ],
+        middleSong: '',
+        life: [
+            { id: generateId(), topic: '', role: '', name: '' },
+        ],
+        bibleStudyLeader: '',
+        closingSong: '',
+        closingPrayer: '',
+    };
+}
+
+function renderWeekdayRow(row, meetingId, section) {
+    let badgeHtml = '';
+    const roleText = (row.role || '').toLowerCase();
+    if (roleText.includes('учащ') || roleText.includes('помощ') || roleText.includes('учен') || roleText.includes('stud') || roleText.includes('elev') || roleText.includes('ajut')) {
+        let label = 'Уч/Пом';
+        if (currentLang === 'uk') label = 'Уч/Пом';
+        else if (currentLang === 'ro') label = 'Elev/Ajut';
+        else if (currentLang === 'en') label = 'Stud/Asst';
+
+        if (roleText === 'учащийся' || roleText === 'учень' || roleText === 'student' || roleText === 'elev') {
+            label = currentLang === 'uk' ? 'Уч' : (currentLang === 'ro' ? 'Elev' : (currentLang === 'en' ? 'Stud' : 'Уч'));
+        }
+        badgeHtml = `<span class="m-row__student-badge">${label}</span>`;
+    }
+
+    return `<div class="m-row m-row--weekday" data-row-id="${row.id}" data-meeting-id="${meetingId}" data-section="${section}">
+        <div style="display:flex; align-items:center; width:100%; gap:4px;">
+            <textarea class="m-textarea" placeholder="${t('topicPh')}" data-field="topic" data-row-id="${row.id}" data-meeting-id="${meetingId}" data-section="${section}" rows="1">${escapeHtml(row.topic)}</textarea>
+            ${badgeHtml}
+        </div>
+        <input type="text" value="${escapeHtml(row.name)}" placeholder="${t('nameSimplePh')}" data-field="name" data-row-id="${row.id}" data-meeting-id="${meetingId}" data-section="${section}">
+        <button class="m-row__delete" data-action="delete-section-row" data-row-id="${row.id}" data-meeting-id="${meetingId}" data-section="${section}" title="${t('deleteRowBtn')}">×</button>
+    </div>`;
+}
+
+function renderWeekdayMeeting(m) {
+    let html = `<div class="meeting-block" data-meeting-id="${m.id}">
+        <button class="meeting-block__delete-btn" data-action="delete-meeting" data-meeting-id="${m.id}" title="${t('deleteMeetingBtn')}">×</button>`;
+
+    html += `<div class="meeting-date-header meeting-date-header--weekday">
+        <input type="text" value="${escapeHtml(m.date)}" placeholder="${t('datePhFull')}" data-field="date" data-meeting-id="${m.id}" style="font-weight:700;font-size:0.9rem;border-bottom-color:rgba(27,42,74,0.3);">
+        <span class="meeting-date-header__role">${t('chairmanWeekday')}</span>
+        <input type="text" value="${escapeHtml(m.chairman)}" placeholder="${t('nameSimplePh')}" data-field="chairman" data-meeting-id="${m.id}" style="font-weight:600;width:180px;border-bottom-color:rgba(27,42,74,0.3);">
+    </div>`;
+
+    html += `<div class="m-row">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.openingSong)}" placeholder="№" data-field="openingSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span></span>
+        <input type="text" value="${escapeHtml(m.openingSongName)}" placeholder="" data-field="openingSongName" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+    html += `<div class="m-row m-row--fixed"><span>${t('introWords')}</span><span></span><span></span><span></span></div>`;
+
+    html += `<div class="section-header section-header--treasures"><span>${t('treasures')}</span><span class="section-header__hall">${t('mainHall')}</span></div>`;
+    m.treasures.forEach(r => { html += renderWeekdayRow(r, m.id, 'treasures'); });
+    html += `<button class="section-add-btn" data-action="add-section-row" data-meeting-id="${m.id}" data-section="treasures">${t('addRow')}</button>`;
+
+    html += `<div class="section-header section-header--skills"><span>${t('skills')}</span><span class="section-header__hall">${t('mainHall')}</span></div>`;
+    m.skills.forEach(r => { html += renderWeekdayRow(r, m.id, 'skills'); });
+    html += `<button class="section-add-btn" data-action="add-section-row" data-meeting-id="${m.id}" data-section="skills">${t('addRow')}</button>`;
+
+    html += `<div class="section-header section-header--life"><span>${t('christianLife')}</span><span></span></div>`;
+    html += `<div class="m-row">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.middleSong)}" placeholder="№" data-field="middleSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span></span><span></span><span></span>
+    </div>`;
+    m.life.forEach(r => { html += renderWeekdayRow(r, m.id, 'life'); });
+    html += `<button class="section-add-btn" data-action="add-section-row" data-meeting-id="${m.id}" data-section="life">${t('addRow')}</button>`;
+
+    html += `<div class="m-row">
+        <span style="font-size:0.8rem;">${t('bibleStudy')}</span>
+        <span class="m-row__role">${t('bibleStudyRole')}</span>
+        <input type="text" value="${escapeHtml(m.bibleStudyLeader)}" placeholder="${t('namesPh')}" data-field="bibleStudyLeader" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+    html += `<div class="m-row m-row--fixed"><span>${t('closingWords')}</span><span></span><span></span><span></span></div>`;
+
+    html += `<div class="m-row">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.closingSong)}" placeholder="№" data-field="closingSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span class="m-row__role">${t('prayer')}</span>
+        <input type="text" value="${escapeHtml(m.closingPrayer)}" placeholder="${t('nameSimplePh')}" data-field="closingPrayer" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+
+    html += `</div>`;
+    return html;
+}
+
+function renderWeekdays() {
+    const container = document.getElementById('app-content');
+    if (!container) return;
+    let html = '';
+    data.meetings.forEach(m => { html += renderWeekdayMeeting(m); });
+    html += `<button class="add-meeting-btn" data-action="add-meeting">${t('addMeeting')}</button>`;
+    container.innerHTML = html;
+    autoResizeTextareas();
+}
+
+// ===== WEEKEND SCHEDULE =====
+function createWeekendMeeting() {
+    return {
+        id: generateId(),
+        date: '',
+        chairman: '',
+        openingTime: '14.00',
+        openingSong: '',
+        openingPrayer: '',
+        talkTime: '14:05',
+        talkTopic: '',
+        talkSpeaker: '',
+        wtSongTime: '14:35',
+        wtSong: '',
+        wtStudyTime: '14:40',
+        wtStudyTopic: '',
+        wtLeader: '',
+        closingTime: '15.40',
+        closingSong: '',
+        closingPrayer: '',
+    };
+}
+
+function renderWeekendMeeting(m) {
+    let html = `<div class="meeting-block" data-meeting-id="${m.id}">
+        <button class="meeting-block__delete-btn" data-action="delete-meeting" data-meeting-id="${m.id}" title="${t('deleteMeetingBtn')}">×</button>`;
+
+    html += `<div class="meeting-date-header meeting-date-header--weekend">
+        <input type="text" value="${escapeHtml(m.date)}" placeholder="${t('datePhFull')}" data-field="date" data-meeting-id="${m.id}" style="font-weight:700;font-size:0.9rem;color:#fff;border-bottom-color:rgba(255,255,255,0.4);">
+        <span class="meeting-date-header__role meeting-date-header__role--weekend">${t('chairmanWeekend')}</span>
+        <input type="text" value="${escapeHtml(m.chairman)}" placeholder="${t('nameSimplePh')}" data-field="chairman" data-meeting-id="${m.id}" style="font-weight:600;width:180px;color:#fff;border-bottom-color:rgba(255,255,255,0.4);">
+    </div>`;
+
+    html += `<div class="m-row m-row--weekend">
+        <input type="text" value="${escapeHtml(m.openingTime)}" data-field="openingTime" data-meeting-id="${m.id}" style="width:50px;text-align:center;" class="m-row__time">
+        <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">* ${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.openingSong)}" placeholder="№" data-field="openingSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span class="m-row__role">${t('prayer')}</span>
+        <input type="text" value="${escapeHtml(m.openingPrayer)}" placeholder="${t('nameSimplePh')}" data-field="openingPrayer" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+
+    html += `<div class="section-header section-header--talk"><span>${t('publicTalk')}</span><span></span></div>`;
+    html += `<div class="m-row m-row--weekend">
+        <input type="text" value="${escapeHtml(m.talkTime)}" data-field="talkTime" data-meeting-id="${m.id}" style="width:50px;text-align:center;" class="m-row__time">
+        <textarea class="m-textarea" placeholder="${t('talkTopicPh')}" data-field="talkTopic" data-meeting-id="${m.id}" rows="1">${escapeHtml(m.talkTopic)}</textarea>
+        <span class="m-row__role">${t('speaker')}</span>
+        <input type="text" value="${escapeHtml(m.talkSpeaker)}" placeholder="${t('nameSimplePh')}" data-field="talkSpeaker" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+
+    html += `<div class="section-header section-header--wt"><span>${t('wtStudy')}</span><span></span></div>`;
+
+    html += `<div class="m-row m-row--weekend">
+        <input type="text" value="${escapeHtml(m.wtSongTime)}" data-field="wtSongTime" data-meeting-id="${m.id}" style="width:50px;text-align:center;" class="m-row__time">
+        <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">* ${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.wtSong)}" placeholder="№" data-field="wtSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span></span><span></span><span></span>
+    </div>`;
+
+    html += `<div class="m-row m-row--weekend">
+        <input type="text" value="${escapeHtml(m.wtStudyTime)}" data-field="wtStudyTime" data-meeting-id="${m.id}" style="width:50px;text-align:center;" class="m-row__time">
+        <textarea class="m-textarea" placeholder="*" data-field="wtStudyTopic" data-meeting-id="${m.id}" rows="1">${escapeHtml(m.wtStudyTopic)}</textarea>
+        <span class="m-row__role">${t('wtLeaderRole')}</span>
+        <input type="text" value="${escapeHtml(m.wtLeader)}" placeholder="${t('namesPh')}" data-field="wtLeader" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+
+    html += `<div class="m-row m-row--weekend">
+        <input type="text" value="${escapeHtml(m.closingTime)}" data-field="closingTime" data-meeting-id="${m.id}" style="width:50px;text-align:center;" class="m-row__time">
+        <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.8rem;white-space:nowrap;">* ${t('song')}</span>
+            <input type="text" value="${escapeHtml(m.closingSong)}" placeholder="№" data-field="closingSong" data-meeting-id="${m.id}" style="width:50px;">
+        </div>
+        <span class="m-row__role">${t('prayer')}</span>
+        <input type="text" value="${escapeHtml(m.closingPrayer)}" placeholder="${t('nameSimplePh')}" data-field="closingPrayer" data-meeting-id="${m.id}">
+        <span></span>
+    </div>`;
+
+    html += `</div>`;
+    return html;
+}
+
+function renderWeekends() {
+    const container = document.getElementById('app-content');
+    if (!container) return;
+    let html = '';
+    data.meetings.forEach(m => { html += renderWeekendMeeting(m); });
+    html += `<button class="add-meeting-btn" data-action="add-meeting">${t('addMeeting')}</button>`;
+    container.innerHTML = html;
+    autoResizeTextareas();
+}
+
+// ===== MEETING EVENT HANDLERS =====
+function handleMeetingInput(e) {
+    const target = e.target;
+    const field = target.dataset.field;
+    if (!field) return;
+
+    if (target.tagName.toLowerCase() === 'textarea') {
+        target.style.height = 'auto';
+        target.style.height = target.scrollHeight + 'px';
+    }
+
+    const meetingId = target.dataset.meetingId;
+    const rowId = target.dataset.rowId;
+    const section = target.dataset.section;
+
+    if (!meetingId) return;
+
+    const meeting = data.meetings.find(m => m.id === meetingId);
+    if (!meeting) return;
+
+    // Section row fields (weekday only)
+    if (rowId && section && meeting[section]) {
+        const row = meeting[section].find(r => r.id === rowId);
+        if (row && (field === 'topic' || field === 'role' || field === 'name')) {
+            row[field] = target.value;
+            saveData();
+            return;
+        }
+    }
+
+    // Direct meeting fields
+    if (field in meeting) {
+        meeting[field] = target.value;
+        saveData();
+    }
+}
+
+function handleMeetingClick(e) {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+
+    const action = btn.dataset.action;
+    const meetingId = btn.dataset.meetingId;
+    const section = btn.dataset.section;
+    const rowId = btn.dataset.rowId;
+
+    switch (action) {
+        case 'add-meeting': {
+            if (!data.meetings) data.meetings = [];
+            if (currentSchedule === 'weekdays') {
+                data.meetings.push(createWeekdayMeeting());
+            } else {
+                data.meetings.push(createWeekendMeeting());
+            }
+            saveData();
+            renderCurrentSchedule();
+            setTimeout(() => {
+                const blocks = document.querySelectorAll('.meeting-block');
+                if (blocks.length > 0) {
+                    blocks[blocks.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+            break;
+        }
+
+        case 'delete-meeting': {
+            if (confirm(t('deleteMeetingConfirm'))) {
+                data.meetings = data.meetings.filter(x => x.id !== meetingId);
+                saveData();
+                renderCurrentSchedule();
+            }
+            break;
+        }
+
+        case 'add-section-row': {
+            if (meetingId && section) {
+                const meeting = data.meetings.find(m => m.id === meetingId);
+                if (meeting && meeting[section]) {
+                    meeting[section].push(createWeekdayRow());
+                    saveData();
+                    renderCurrentSchedule();
+                }
+            }
+            break;
+        }
+
+        case 'delete-section-row': {
+            if (meetingId && section && rowId) {
+                const meeting = data.meetings.find(m => m.id === meetingId);
+                if (meeting && meeting[section]) {
+                    const row = meeting[section].find(r => r.id === rowId);
+                    if (row) {
+                        const hasData = (row.topic || '').trim() || (row.name || '').trim();
+                        if (hasData && !confirm(t('deleteRowConfirm'))) return;
+                        meeting[section] = meeting[section].filter(r => r.id !== rowId);
+                        saveData();
+                        renderCurrentSchedule();
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
+
+// ===== ATTENDANTS SCHEDULE =====
+function generateId() {
+    return 'id-' + Math.random().toString(36).slice(2, 10);
+}
+
+function createAttendantRow() {
+    return { id: generateId(), date: '', entrance: '', hall: '', mic1: '', mic2: '', ventilation: '' };
+}
+
+function createSoundRow() {
+    return { id: generateId(), date: '', audio: '', video: '', zoom: '' };
+}
+
+function escapeHtmlAtt(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderAttendants() {
+    const container = document.getElementById('app-content');
+    if (!container) return;
+
+    if (!data.attendantsRows) data.attendantsRows = [createAttendantRow()];
+    if (!data.soundRows) data.soundRows = [createSoundRow()];
+
+    const inp = (val, field, rowId, table) =>
+        `<input type="text" class="att-cell__input" value="${escapeHtmlAtt(val)}" data-att-field="${field}" data-att-row="${rowId}" data-att-table="${table}" placeholder="—">`;
+
+    // Table 1: Attendants
+    let att = `
+    <div class="att-section">
+        <div class="att-section__title">${t('attendantsTitle')}</div>
+        <div class="att-table">
+            <div class="att-header att-header--7col">
+                <span>${t('dateCol')}</span>
+                <span>${t('colEntrance')}</span>
+                <span>${t('colHall')}</span>
+                <span>${t('colMic1')}</span>
+                <span>${t('colMic2')}</span>
+                <span>${t('colVentilation')}</span>
+                <span></span>
+            </div>`;
+
+    data.attendantsRows.forEach(row => {
+        att += `<div class="att-row att-row--7col" data-att-row="${row.id}">
+            ${inp(row.date, 'date', row.id, 'att')}
+            ${inp(row.entrance, 'entrance', row.id, 'att')}
+            ${inp(row.hall, 'hall', row.id, 'att')}
+            ${inp(row.mic1, 'mic1', row.id, 'att')}
+            ${inp(row.mic2, 'mic2', row.id, 'att')}
+            ${inp(row.ventilation, 'ventilation', row.id, 'att')}
+            <button class="att-row__del" data-att-action="del-att" data-att-row="${row.id}" title="${t('deleteAttRowConfirm')}">${ICONS.trash}</button>
+        </div>`;
+    });
+
+    att += `</div>
+        <div class="att-actions-bar">
+            <button class="att-add-btn" data-att-action="add-att">${t('addAttRow')}</button>
+            <button class="att-import-btn" data-att-action="import-att">📥 ${t('importExcel')}</button>
+        </div>
+    </div>`;
+
+    // Table 2: Sound
+    att += `
+    <div class="att-section">
+        <div class="att-section__title">${t('soundTitle')}</div>
+        <div class="att-table">
+            <div class="att-header att-header--5col">
+                <span>${t('dateCol')}</span>
+                <span>${t('colAudio')}</span>
+                <span>${t('colVideo')}</span>
+                <span>${t('colZoom')}</span>
+                <span></span>
+            </div>`;
+
+    data.soundRows.forEach(row => {
+        att += `<div class="att-row att-row--5col" data-att-row="${row.id}">
+            ${inp(row.date, 'date', row.id, 'sound')}
+            ${inp(row.audio, 'audio', row.id, 'sound')}
+            ${inp(row.video, 'video', row.id, 'sound')}
+            ${inp(row.zoom, 'zoom', row.id, 'sound')}
+            <button class="att-row__del" data-att-action="del-sound" data-att-row="${row.id}" title="${t('deleteAttRowConfirm')}">${ICONS.trash}</button>
+        </div>`;
+    });
+
+    att += `</div>
+        <div class="att-actions-bar">
+            <button class="att-add-btn" data-att-action="add-sound">${t('addAttRow')}</button>
+        </div>
+    </div>`;
+
+    // Main Excel import button (imports both tables at once from one file)
+    att += `<div class="att-import-bar">
+        <button class="att-import-main-btn" data-att-action="import-xlsx">
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18" style="vertical-align:middle;margin-right:6px"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 4v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ${t('importExcelFull')}
+        </button>
+        <span class="att-import-hint">${t('importExcelHint')}</span>
+    </div>`;
+
+    container.innerHTML = att;
+}
+
+function handleAttendantsInput(e) {
+    const target = e.target;
+    const field = target.dataset.attField;
+    const rowId = target.dataset.attRow;
+    const table = target.dataset.attTable;
+    if (!field || !rowId || !table) return;
+
+    if (table === 'att') {
+        const row = (data.attendantsRows || []).find(r => r.id === rowId);
+        if (row && field in row) { row[field] = target.value; saveData(); }
+    } else if (table === 'sound') {
+        const row = (data.soundRows || []).find(r => r.id === rowId);
+        if (row && field in row) { row[field] = target.value; saveData(); }
+    }
+}
+
+function handleAttendantsClick(e) {
+    const btn = e.target.closest('[data-att-action]');
+    if (!btn) return;
+    const action = btn.dataset.attAction;
+    const rowId = btn.dataset.attRow;
+
+    if (action === 'add-att') {
+        if (!data.attendantsRows) data.attendantsRows = [];
+        data.attendantsRows.push(createAttendantRow());
+        saveData();
+        renderCurrentSchedule();
+    } else if (action === 'add-sound') {
+        if (!data.soundRows) data.soundRows = [];
+        data.soundRows.push(createSoundRow());
+        saveData();
+        renderCurrentSchedule();
+    } else if (action === 'del-att') {
+        if (!rowId) return;
+        data.attendantsRows = (data.attendantsRows || []).filter(r => r.id !== rowId);
+        saveData();
+        renderCurrentSchedule();
+    } else if (action === 'del-sound') {
+        if (!rowId) return;
+        data.soundRows = (data.soundRows || []).filter(r => r.id !== rowId);
+        saveData();
+        renderCurrentSchedule();
+    } else if (action === 'import-att') {
+        importFromExcel('att');
+    } else if (action === 'import-xlsx') {
+        importFromExcel('both');
+    }
+}
+
+// ===== EXCEL IMPORT =====
+function importFromExcel(mode) {
+    if (typeof XLSX === 'undefined') {
+        alert('Библиотека Excel не загружена. Проверьте подключение к интернету и обновите страницу.');
+        return;
+    }
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx,.xls,.csv';
+    input.onchange = function(ev) {
+        const file = ev.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const wb = XLSX.read(e.target.result, { type: 'binary', cellDates: true });
+                const sheetName = wb.SheetNames[0];
+                const sheet = wb.Sheets[sheetName];
+                const allRows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', blankrows: true });
+
+                // Split into two blocks: separated by empty row(s) or title rows
+                let block1 = [], block2 = [];
+                let separatorFound = false;
+                let headerSkipped1 = false, headerSkipped2 = false;
+
+                for (let i = 0; i < allRows.length; i++) {
+                    const row = allRows[i];
+                    const isEmpty = row.every(c => c === '' || c === null || c === undefined);
+                    if (!separatorFound) {
+                        if (isEmpty) { if (block1.length > 0) separatorFound = true; continue; }
+                        if (!headerSkipped1) { headerSkipped1 = true; continue; }
+                        block1.push(row);
+                    } else {
+                        if (isEmpty) continue;
+                        if (!headerSkipped2) { headerSkipped2 = true; continue; }
+                        block2.push(row);
+                    }
+                }
+
+                const cellStr = (v) => {
+                    if (v === null || v === undefined || v === '') return '';
+                    if (v instanceof Date) return v.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+                    return String(v).trim();
+                };
+
+                if (mode === 'att' || mode === 'both') {
+                    if (block1.length > 0) {
+                        data.attendantsRows = block1
+                            .filter(r => r.some(c => c !== '' && c !== null))
+                            .map(r => ({ id: generateId(), date: cellStr(r[0]), entrance: cellStr(r[1]), hall: cellStr(r[2]), mic1: cellStr(r[3]), mic2: cellStr(r[4]), ventilation: cellStr(r[5]) }));
+                    }
+                }
+                if (mode === 'both') {
+                    if (block2.length > 0) {
+                        data.soundRows = block2
+                            .filter(r => r.some(c => c !== '' && c !== null))
+                            .map(r => ({ id: generateId(), date: cellStr(r[0]), audio: cellStr(r[1]), video: cellStr(r[2]), zoom: cellStr(r[3]) }));
+                    }
+                }
+
+                saveData();
+                renderCurrentSchedule();
+
+                const imported = (data.attendantsRows || []).length + (data.soundRows || []).length;
+                const msg = currentLang === 'uk' ? `Імпортовано ${imported} рядків!`
+                          : currentLang === 'ro' ? `${imported} rânduri importate!`
+                          : currentLang === 'en' ? `Imported ${imported} rows!`
+                          : `Импортировано строк: ${imported}`;
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#2C3E6B;color:#C8A45A;padding:12px 20px;border-radius:8px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2)';
+                toast.textContent = '✓ ' + msg;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            } catch (err) {
+                alert('Ошибка при чтении файла: ' + err.message);
+            }
+        };
+        reader.readAsBinaryString(file);
+    };
+    input.click();
+}
+
+function renderCurrentSchedule() {
+    if (currentSchedule === 'weekdays') renderWeekdays();
+    else if (currentSchedule === 'weekends') renderWeekends();
+    else if (currentSchedule === 'attendants') renderAttendants();
+
+    const appContent = document.getElementById('app-content');
+    if (appContent && !document.getElementById('exportPdfBtnMeeting')) {
+        const pdfBtn = document.createElement('button');
+        pdfBtn.className = 'export-pdf-btn export-pdf-btn--meeting';
+        pdfBtn.id = 'exportPdfBtnMeeting';
+        pdfBtn.innerHTML = ICONS.pdf + ' ' + t('exportPdf');
+        pdfBtn.addEventListener('click', exportToPDF);
+        appContent.appendChild(pdfBtn);
+    }
+}
+
+// ===== PDF EXPORT =====
+function exportToPDF() {
+    window.print();
+}
+
+// ===== NAVIGATION =====
+function toggleMenu() {
+    const dropdown = document.getElementById('menuDropdown');
+    if (dropdown) dropdown.classList.toggle('open');
+}
+
+function closeMenu() {
+    const dropdown = document.getElementById('menuDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+    const wrapper = document.querySelector('.nav-bar__menu-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+        closeMenu();
+    }
+});
+
+function switchSchedule(type) {
+    if (!SCHEDULE_TYPES[type]) return;
+
+    if (data) saveData();
+
+    currentSchedule = type;
+    localStorage.setItem('activeScheduleType', type);
+
+    const label = document.getElementById('currentScheduleLabel');
+    if (label) label.textContent = SCHEDULE_TYPES[type].label;
+
+    const items = document.querySelectorAll('.nav-bar__dropdown-item');
+    items.forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.schedule === type) item.classList.add('active');
+    });
+
+    closeMenu();
+
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer');
+    const container = document.getElementById('app-content');
+
+    // Remove old event listeners by cloning
+    const newContainer = container.cloneNode(false);
+    container.parentNode.replaceChild(newContainer, container);
+
+    if (type === 'preaching') {
+        if (header) header.style.display = '';
+        if (footer) footer.style.display = '';
+        loadData();
+
+        const groupNameEl = document.getElementById('groupName');
+        const groupNumberEl = document.getElementById('groupNumber');
+        if (groupNameEl && data.groupName) groupNameEl.textContent = data.groupName;
+        if (groupNumberEl && data.groupNumber) groupNumberEl.textContent = data.groupNumber;
+
+        render();
+
+        const c = document.getElementById('app-content');
+        if (c) {
+            c.addEventListener('input', handleInput);
+            c.addEventListener('change', handleInput);
+            c.addEventListener('click', handleClick);
+        }
+    } else {
+        if (header) header.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+
+        loadData();
+        if (type === 'attendants') {
+            if (!data.attendantsRows) {
+                data.attendantsRows = [createAttendantRow()];
+                data.soundRows = [createSoundRow()];
+                saveData();
+            }
+        } else if (!data.meetings) {
+            data.meetings = [];
+            if (type === 'weekdays') {
+                data.meetings.push(createWeekdayMeeting());
+                data.meetings.push(createWeekdayMeeting());
+            } else {
+                data.meetings.push(createWeekendMeeting());
+                data.meetings.push(createWeekendMeeting());
+                data.meetings.push(createWeekendMeeting());
+            }
+            saveData();
+        }
+
+        renderCurrentSchedule();
+
+        const c = document.getElementById('app-content');
+        if (c) {
+            if (type === 'attendants') {
+                c.addEventListener('input', handleAttendantsInput);
+                c.addEventListener('click', handleAttendantsClick);
+            } else {
+                c.addEventListener('input', handleMeetingInput);
+                c.addEventListener('change', handleMeetingInput);
+                c.addEventListener('click', handleMeetingClick);
+            }
+        }
+    }
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function () {
+    // Restore language
+    const savedLang = localStorage.getItem('appLanguage');
+    if (savedLang && LANGS[savedLang]) {
+        currentLang = savedLang;
+    }
+    SCHEDULE_TYPES = getScheduleTypes();
+
+    // Apply language to static elements
+    const title = document.querySelector('.header__title');
+    if (title) title.innerHTML = t('appTitle');
+    const badgeLabel = document.querySelector('.header__badge-label');
+    if (badgeLabel) badgeLabel.textContent = t('groupLabel');
+    const quoteText = document.querySelector('.footer__quote-text p:first-child');
+    if (quoteText) quoteText.innerHTML = t('quoteText');
+    const quoteRef = document.querySelector('.footer__quote-ref');
+    if (quoteRef) quoteRef.textContent = t('quoteRef');
+    const exportBtn = document.getElementById('exportPdfBtn');
+    if (exportBtn) {
+        const svg = exportBtn.querySelector('svg');
+        const svgHtml = svg ? svg.outerHTML : '';
+        exportBtn.innerHTML = svgHtml + ' ' + t('exportPdf');
+    }
+    const langLabel = document.getElementById('currentLangLabel');
+    if (langLabel) langLabel.textContent = LANGS[currentLang].label;
+    document.querySelectorAll('.lang-dropdown__item').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === currentLang);
+    });
+    document.querySelectorAll('.nav-bar__dropdown-item').forEach(item => {
+        const type = item.dataset.schedule;
+        if (type && SCHEDULE_TYPES[type]) {
+            const svg = item.querySelector('svg');
+            const svgHtml = svg ? svg.outerHTML : '';
+            item.innerHTML = svgHtml + '\n                        ' + SCHEDULE_TYPES[type].fullLabel;
+        }
+    });
+
+    // Restore last active schedule type
+    const savedType = localStorage.getItem('activeScheduleType');
+    if (savedType && SCHEDULE_TYPES[savedType]) {
+        currentSchedule = savedType;
+    }
+
+    loadData();
+
+    if (currentSchedule !== 'preaching') {
+        switchSchedule(currentSchedule);
+    } else {
+        const groupNameEl = document.getElementById('groupName');
+        const groupNumberEl = document.getElementById('groupNumber');
+        if (groupNameEl && data.groupName) groupNameEl.textContent = data.groupName;
+        if (groupNumberEl && data.groupNumber) groupNumberEl.textContent = data.groupNumber;
+
+        const label = document.getElementById('currentScheduleLabel');
+        if (label) label.textContent = SCHEDULE_TYPES.preaching.label;
+
+        render();
+
+        const container = document.getElementById('app-content');
+        if (container) {
+            container.addEventListener('input', handleInput);
+            container.addEventListener('change', handleInput);
+            container.addEventListener('click', handleClick);
+        }
+
+        if (groupNameEl) {
+            groupNameEl.addEventListener('input', handleHeaderInput);
+            groupNameEl.addEventListener('blur', handleHeaderInput);
+        }
+        if (groupNumberEl) {
+            groupNumberEl.addEventListener('input', handleHeaderInput);
+            groupNumberEl.addEventListener('blur', handleHeaderInput);
+        }
+    }
+});
+
+// ===== LANGUAGE SWITCHING =====
+function toggleLangMenu() {
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) dropdown.classList.toggle('open');
+}
+
+function closeLangMenu() {
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+}
+
+function switchLanguage(lang) {
+    if (!LANGS[lang]) return;
+    currentLang = lang;
+    localStorage.setItem('appLanguage', lang);
+
+    SCHEDULE_TYPES = getScheduleTypes();
+
+    const title = document.querySelector('.header__title');
+    if (title) title.innerHTML = t('appTitle');
+
+    const badgeLabel = document.querySelector('.header__badge-label');
+    if (badgeLabel) badgeLabel.textContent = t('groupLabel');
+
+    const quoteText = document.querySelector('.footer__quote-text p:first-child');
+    if (quoteText) quoteText.innerHTML = t('quoteText');
+
+    const quoteRef = document.querySelector('.footer__quote-ref');
+    if (quoteRef) quoteRef.textContent = t('quoteRef');
+
+    const exportBtn = document.getElementById('exportPdfBtn');
+    if (exportBtn) {
+        const svg = exportBtn.querySelector('svg');
+        const svgHtml = svg ? svg.outerHTML : '';
+        exportBtn.innerHTML = svgHtml + ' ' + t('exportPdf');
+    }
+    
+    // Also update meeting PDF button if present
+    const meetingExportBtn = document.getElementById('exportPdfBtnMeeting');
+    if (meetingExportBtn) {
+        meetingExportBtn.innerHTML = ICONS.pdf + ' ' + t('exportPdf');
+    }
+
+    const navLabel = document.getElementById('currentScheduleLabel');
+    if (navLabel) navLabel.textContent = SCHEDULE_TYPES[currentSchedule].label;
+
+    const items = document.querySelectorAll('.nav-bar__dropdown-item');
+    items.forEach(item => {
+        const type = item.dataset.schedule;
+        if (type && SCHEDULE_TYPES[type]) {
+            const svg = item.querySelector('svg');
+            const svgHtml = svg ? svg.outerHTML : '';
+            item.innerHTML = svgHtml + '\n                        ' + SCHEDULE_TYPES[type].fullLabel;
+        }
+    });
+
+    const langLabel = document.getElementById('currentLangLabel');
+    if (langLabel) langLabel.textContent = LANGS[lang].label;
+
+    document.querySelectorAll('.lang-dropdown__item').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === lang);
+    });
+
+    closeLangMenu();
+
+    if (currentSchedule === 'preaching') {
+        render();
+    } else {
+        renderCurrentSchedule();
+    }
+}
+
+document.addEventListener('click', function(e) {
+    const langWrapper = document.getElementById('langWrapper');
+    if (langWrapper && !langWrapper.contains(e.target)) {
+        closeLangMenu();
+    }
+});
+
+</script>
+</body>
+</html>
