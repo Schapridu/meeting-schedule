@@ -7,7 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+    
+
+<style>
 /* ===== FONTS & RESET ===== */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -17,7 +19,7 @@
 
 body {
     background-color: #EFE6D5;
-    background-image: radial-gradient(#D4A843 0.8px, transparent 0.8px);
+    background-image: radial-gradient(#C8A45A 0.8px, transparent 0.8px);
     background-size: 24px 24px;
     font-family: 'Inter', 'Segoe UI', sans-serif;
     color: #1B2A4A;
@@ -40,7 +42,7 @@ input[type="text"] {
     gap: 8px;
     margin: 24px auto 16px;
     padding: 12px 28px;
-    background: linear-gradient(135deg, #C8A45A, #D4A843);
+    background: linear-gradient(135deg, #C8A45A, #C8A45A);
     color: #1B2A4A;
     border: none;
     border-radius: 8px;
@@ -53,7 +55,7 @@ input[type="text"] {
 }
 
 .export-pdf-btn--meeting:hover {
-    background: linear-gradient(135deg, #D4A843, #C8A45A);
+    background: linear-gradient(135deg, #C8A45A, #C8A45A);
     box-shadow: 0 4px 12px rgba(200, 164, 90, 0.4);
     transform: translateY(-1px);
 }
@@ -265,7 +267,7 @@ input[type="text"] {
 .schedule-placeholder__icon {
     width: 80px;
     height: 80px;
-    color: #D4A843;
+    color: #C8A45A;
     margin: 0 auto 20px;
     opacity: 0.5;
 }
@@ -415,7 +417,7 @@ input[type="text"] {
     font-size: 0.85rem;
     font-weight: 600;
     color: #1B2A4A;
-    border: 2px solid #D4A843;
+    border: 2px solid #C8A45A;
     border-radius: 6px;
     padding: 6px 14px;
     background: #fff;
@@ -436,7 +438,7 @@ input[type="text"] {
     font-size: 0.85rem;
     font-weight: 600;
     color: #1B2A4A;
-    border: 2px solid #D4A843;
+    border: 2px solid #C8A45A;
     border-radius: 6px;
     padding: 6px 12px;
     background: #fff;
@@ -462,7 +464,7 @@ input[type="text"] {
 
 /* ===== MONTH BLOCK ===== */
 .month-block {
-    border: 1px solid #D4A843;
+    border: 1px solid #C8A45A;
     border-radius: 4px;
     box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
     position: relative;
@@ -587,8 +589,9 @@ input[type="text"] {
     grid-template-columns: 1fr 1fr 36px 36px;
     gap: 8px;
     padding: 10px 16px;
-    background: #1B2A4A;
-    color: #fff;
+    background: #EAE0C8;
+    color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -620,7 +623,7 @@ input[type="text"] {
     font-size: 0.85rem;
     color: #1B2A4A;
     border: none;
-    border-bottom: 1.5px solid #D4A843;
+    border-bottom: 1.5px solid #C8A45A;
     background: transparent;
     padding: 6px 4px;
     outline: none;
@@ -699,7 +702,7 @@ input[type="text"] {
     display: block;
     margin: 16px auto 28px;
     padding: 12px 28px;
-    border: 2px dashed #D4A843;
+    border: 2px dashed #C8A45A;
     border-radius: 8px;
     background: transparent;
     color: #C8A45A;
@@ -720,7 +723,7 @@ input[type="text"] {
 
 /* ===== FOOTER ===== */
 .footer {
-    border-top: 2px solid #D4A843;
+    border-top: 2px solid #C8A45A;
     background: #F5F0E5;
 }
 
@@ -804,7 +807,7 @@ input[type="text"] {
 @media (max-width: 700px) {
     body {
     background-color: #EFE6D5;
-    background-image: radial-gradient(#D4A843 0.5px, transparent 0.5px);
+    background-image: radial-gradient(#C8A45A 0.5px, transparent 0.5px);
     background-size: 20px 20px;
 
         padding: 8px 2px;
@@ -851,7 +854,7 @@ input[type="text"] {
     }
 
     .month-block {
-    border: 1px solid #D4A843;
+    border: 1px solid #C8A45A;
     border-radius: 4px;
     box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
     position: relative;
@@ -959,12 +962,14 @@ input[type="text"] {
     font-weight: 600;
 }
 .meeting-date-header--weekday {
-    background: #B8D4E3;
+    background: #EAE0C8;
     color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
 }
 .meeting-date-header--weekend {
-    background: #8C9EAF;
-    color: #fff;
+    background: #EAE0C8;
+    color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
 }
 .meeting-date-header--weekend input[type="text"] {
     background: transparent;
@@ -1036,7 +1041,7 @@ input[type="text"] {
     font-size: 0.8rem;
     color: #1B2A4A;
     border: none;
-    border-bottom: 1px solid #D4A843;
+    border-bottom: 1px solid #C8A45A;
     background: transparent;
     padding: 3px 4px;
     outline: none;
@@ -1050,7 +1055,7 @@ textarea.m-textarea {
     font-size: 0.8rem;
     color: #1B2A4A;
     border: none;
-    border-bottom: 1px solid #D4A843;
+    border-bottom: 1px solid #C8A45A;
     background: transparent;
     padding: 3px 4px;
     outline: none;
@@ -1097,7 +1102,7 @@ textarea.m-textarea::placeholder {
     gap: 8px;
     margin: 24px auto 16px;
     padding: 12px 28px;
-    background: linear-gradient(135deg, #C8A45A, #D4A843);
+    background: linear-gradient(135deg, #C8A45A, #C8A45A);
     color: #1B2A4A;
     border: none;
     border-radius: 8px;
@@ -1110,7 +1115,7 @@ textarea.m-textarea::placeholder {
 }
 
 .export-pdf-btn--meeting:hover {
-    background: linear-gradient(135deg, #D4A843, #C8A45A);
+    background: linear-gradient(135deg, #C8A45A, #C8A45A);
     box-shadow: 0 4px 12px rgba(200, 164, 90, 0.4);
     transform: translateY(-1px);
 }
@@ -1157,7 +1162,7 @@ textarea.m-textarea::placeholder {
     display: block;
     margin: 16px auto 28px;
     padding: 12px 28px;
-    border: 2px dashed #D4A843;
+    border: 2px dashed #C8A45A;
     border-radius: 8px;
     background: transparent;
     color: #C8A45A;
@@ -1197,9 +1202,22 @@ textarea.m-textarea::placeholder {
 
 /* ===== PRINT STYLES ===== */
 @media print {
+
+    /* Fix empty second page in PDF */
+    body, html {
+        min-height: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    /* Ensure Publishers grid doesn't overflow */
+    .publishers-grid {
+        margin-bottom: 0 !important;
+    }
+
     body {
     background-color: #EFE6D5;
-    background-image: radial-gradient(#D4A843 0.5px, transparent 0.5px);
+    background-image: radial-gradient(#C8A45A 0.5px, transparent 0.5px);
     background-size: 20px 20px;
 
         background: #fff;
@@ -1235,7 +1253,7 @@ textarea.m-textarea::placeholder {
     }
 
     .month-block {
-    border: 1px solid #D4A843;
+    border: 1px solid #C8A45A;
     border-radius: 4px;
     box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
     position: relative;
@@ -1272,7 +1290,7 @@ textarea.m-textarea::placeholder {
 }
 
 .month-block {
-    border: 1px solid #D4A843;
+    border: 1px solid #C8A45A;
     border-radius: 4px;
     box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
     position: relative;
@@ -1282,7 +1300,7 @@ textarea.m-textarea::placeholder {
 
 /* ===== ATTENDANTS SCHEDULE ===== */
 .att-section {
-    border: 1px solid #D4A843;
+    border: 1px solid #C8A45A;
     border-radius: 4px;
     box-shadow: 3px 3px 0px rgba(200, 164, 90, 0.2);
     padding: 16px;
@@ -1296,8 +1314,9 @@ textarea.m-textarea::placeholder {
     overflow: hidden;
 }
 .att-section__title {
-    background: #1B2A4A;
-    color: #C8A45A;
+    background: #EAE0C8;
+    color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
     font-family: 'Playfair Display', serif;
     font-size: 1rem;
     font-weight: 700;
@@ -1309,8 +1328,9 @@ textarea.m-textarea::placeholder {
 .att-table { padding: 0 0 4px; }
 .att-header {
     display: grid;
-    background: #2C3E6B;
-    color: #fff;
+    background: #F3EBD8;
+    color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -1328,14 +1348,14 @@ textarea.m-textarea::placeholder {
     border-bottom: 1px solid #f0ebe0;
     transition: background 0.15s;
 }
-.att-row:hover { background: #fdf8f0; }
+.att-row:hover { background: #FDF8F0; }
 .att-row--7col { grid-template-columns: 90px 1fr 1fr 1fr 1fr 1fr 32px; }
 .att-row--5col { grid-template-columns: 90px 1fr 1fr 1fr 32px; }
 .att-cell__input {
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid #D4A843;
+    border-bottom: 1px solid #C8A45A;
     color: #1B2A4A;
     font-family: 'Inter', sans-serif;
     font-size: 0.82rem;
@@ -1368,7 +1388,7 @@ textarea.m-textarea::placeholder {
     display: block;
     margin: 8px 12px 12px;
     background: none;
-    border: 1.5px dashed #D4A843;
+    border: 1.5px dashed #C8A45A;
     color: #C8A45A;
     font-family: 'Inter', sans-serif;
     font-size: 0.82rem;
@@ -1434,7 +1454,176 @@ textarea.m-textarea::placeholder {
     .att-row__del, .att-add-btn, .att-import-btn, .att-import-bar, .att-actions-bar { display: none !important; }
     .att-cell__input { border-bottom-color: transparent; }
 }
+/* ===== PUBLISHERS PAGE ===== */
+.publishers-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #C8A45A;
+    box-shadow: 0 4px 12px rgba(27, 42, 74, 0.05);
+}
+.pub-settings label {
+    font-weight: 600;
+    color: #1B2A4A;
+}
+.pub-settings select {
+    margin-left: 5px;
+    padding: 5px;
+    border: 1px solid #C8A45A;
+    border-radius: 4px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+.add-pub-group-btn {
+    background: #1B2A4A;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.add-pub-group-btn:hover {
+    background: #1e3629;
+}
+.publishers-grid {
+    position: relative;
 
+    display: grid;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 20px;
+}
+.pub-card {
+    background: #fff;
+    border: 2px solid #2c4c3b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.08);
+    cursor: grab;
+    transition: transform 0.2s;
+    margin-top: 0;
+}
+.pub-card:active { cursor: grabbing; }
+.pub-card.dragging { opacity: 0.4; transform: scale(0.98); }
+.pub-card-header {
+    background: #EAE0C8;
+    color: #1B2A4A;
+    border-bottom: 1px solid #D4A843;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    clip-path: none;
+    margin-bottom: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+.pub-card-header input {
+    background: transparent;
+    border: none;
+    color: #1B2A4A;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    font-family: 'Playfair Display', serif;
+}
+.pub-card-header input:focus { outline: none; border-bottom: 1px solid rgba(27,42,74,0.3); }
+.pub-delete-group-btn {
+    background: none; border: none; color: #ff9999; cursor: pointer; font-size: 1.2rem;
+}
+.pub-delete-group-btn:hover { color: #ff4d4d; }
+.pub-card-body {
+    padding: 10px;
+}
+.pub-row {
+    display: flex;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+.pub-row:last-of-type { border-bottom: none; }
+.pub-num {
+    width: 30px;
+    font-weight: 700;
+    color: #2c4c3b;
+    text-align: center;
+}
+.pub-row input[type="text"] {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    font-family: 'Inter', sans-serif;
+    color: #1B2A4A;
+    outline: none;
+}
+.pub-row input[type="text"]:focus { border-bottom: 1px solid #D4A843; }
+.pub-delete-row-btn {
+    background: none; border: none; color: #c0392b; cursor: pointer; padding: 0 5px; opacity: 0.5;
+}
+.pub-delete-row-btn:hover { opacity: 1; }
+.pub-add-row-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed #D4A843;
+    color: #c8a45a;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.pub-add-row-btn:hover { background: #fdf8f0; }
+.pub-card-footer {
+    text-align: center;
+    padding: 5px;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+}
+
+@media print {
+    .app {
+        border: none !important;
+        padding: 0 !important;
+    }
+}
+
+@media print {
+    .publishers-toolbar, .pub-add-row-btn, .pub-delete-row-btn, .pub-delete-group-btn {
+        display: none !important;
+    }
+    .pub-card {
+        box-shadow: none;
+        border: 1px solid #1B2A4A;
+    }
+}
+
+
+.page-decor.top-right {
+    top: -30px;
+    right: -30px;
+}
+.page-decor.bottom-left {
+    bottom: -30px;
+    left: -30px;
+}
+
+@media print { .page-decor { opacity: 0.8 !important; } }
+
+
+
+@media print {
+    /* Prevent cutting rows and titles across pages */
+    .pub-card { break-inside: avoid; page-break-inside: avoid; }
+    .publishers-grid { gap: 20px !important; align-items: start; }
+    
+    /* Remove padding around the app */
+    .app { margin: 0 !important; border: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1469,6 +1658,10 @@ textarea.m-textarea::placeholder {
                     <button class="nav-bar__dropdown-item" data-schedule="attendants" onclick="switchSchedule('attendants')">
                         <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 18c0-3 2-5 5-5h6c3 0 5 2 5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
                         График служения распорядителей
+                    </button>
+                    <button class="nav-bar__dropdown-item" data-schedule="publishers" onclick="switchSchedule('publishers')">
+                        <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M10 3.5C6 3.5 2.73 6.61 1 11c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM10 15c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="currentColor"/></svg>
+                        Список возвещателей
                     </button>
                 </div>
             </div>
@@ -1571,8 +1764,36 @@ textarea.m-textarea::placeholder {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script>
+    
+
+<script>
 'use strict';
+
+window.setGlobalOrientation = function(val) {
+    if (!data.settings) data.settings = {};
+    data.settings.orientation = val;
+    saveData();
+    if (typeof updatePrintOrientation === 'function') updatePrintOrientation();
+};
+
+function getGlobalToolbar() {
+    if (!data.settings) data.settings = { orientation: 'landscape' };
+    return `
+    <div class="publishers-toolbar no-print" style="display: flex; justify-content: space-between; align-items: center; background: #FDF8F0; padding: 10px 15px; border-radius: 8px; margin: 15px 24px 0; border: 1px solid #C8A45A;">
+        <div class="pub-settings">
+            <label style="font-weight:bold; color: #1B2A4A;">${t('orientation') || 'Ориентация:'} 
+                <select onchange="window.setGlobalOrientation(this.value)" style="padding: 5px; border-radius:4px; border: 1px solid #ccc; font-family: Inter;">
+                    <option value="portrait" ${data.settings.orientation === 'portrait' ? 'selected' : ''}>📄 ${t('portrait') || 'Книжная'}</option>
+                    <option value="landscape" ${data.settings.orientation === 'landscape' ? 'selected' : ''}>🖼 ${t('landscape') || 'Альбомная'}</option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <button class="add-pub-group-btn" onclick="window.print()" style="background: #C8A45A; color: #1B2A4A; font-weight: bold; padding: 8px 16px; border:none; border-radius:4px; cursor: pointer;">🖨️ PDF</button>
+        </div>
+    </div>`;
+}
+
 
 // ===== INTERNATIONALIZATION =====
 let currentLang = 'ru';
@@ -1587,7 +1808,18 @@ const LANGS = {
 const T = {
     ru: {
         appTitle: 'ГРАФИК ВСТРЕЧ<br>ПЕРЕД ПРОПОВЕДНИЧЕСКИМ<br>СЛУЖЕНИЕМ',
-        groupLabel: 'ГРУППА',
+        
+        schedPublishers: 'Список возвещателей',
+        schedPublishersFull: 'Список возвещателей собрания',
+        layoutOptions: 'Отображение:',
+        layoutRow1: 'В 1 ряд',
+        layoutRow2: 'В 2 ряда',
+        orientation: 'Ориентация:',
+        portrait: 'Книжная',
+        landscape: 'Альбомная',
+        addGroup: '+ Добавить группу',
+        delGroup: 'Удалить группу',
+groupLabel: 'ГРУППА',
         timeLabel: 'ВРЕМЯ ПРОВЕДЕНИЯ:',
         dateCol: 'ДАТА',
         responsibleCol: 'ОТВЕТСТВЕННЫЙ',
@@ -1657,7 +1889,18 @@ const T = {
     },
     uk: {
         appTitle: 'ГРАФІК ЗУСТРІЧЕЙ<br>ПЕРЕД ПРОПОВІДНИЦЬКИМ<br>СЛУЖІННЯМ',
-        groupLabel: 'ГРУПА',
+        
+        schedPublishers: 'Список вісників',
+        schedPublishersFull: 'Список вісників збору',
+        layoutOptions: 'Відображення:',
+        layoutRow1: 'В 1 рядок',
+        layoutRow2: 'У 2 рядки',
+        orientation: 'Орієнтація:',
+        portrait: 'Книжкова',
+        landscape: 'Альбомна',
+        addGroup: '+ Додати групу',
+        delGroup: 'Видалити групу',
+groupLabel: 'ГРУПА',
         timeLabel: 'ЧАС ПРОВЕДЕННЯ:',
         dateCol: 'ДАТА',
         responsibleCol: 'ВІДПОВІДАЛЬНИЙ',
@@ -1726,6 +1969,17 @@ const T = {
         importExcelHint: 'Файл має мати 2 таблиці: спочатку обслуговуючі, потім озвучування ',
     },
     ro: {
+        
+        schedPublishers: 'Lista vestitorilor',
+        schedPublishersFull: 'Lista vestitorilor congregației',
+        layoutOptions: 'Afișare:',
+        layoutRow1: '1 rând',
+        layoutRow2: '2 rânduri',
+        orientation: 'Orientare:',
+        portrait: 'Portret',
+        landscape: 'Peisaj',
+        addGroup: '+ Adaugă grupa',
+        delGroup: 'Șterge',
         appTitle: 'PROGRAMUL ÎNTÂLNIRILOR<br>ÎNAINTE DE SERVICIUL<br>DE PREDICARE',
         groupLabel: 'GRUPA',
         timeLabel: 'ORA DESFĂȘURĂRII:',
@@ -1796,6 +2050,17 @@ const T = {
         importExcelHint: 'Fișierul trebuie să conțină 2 tabele: mai întâi oamenii de ordine, apoi sonorizarea',
     },
     en: {
+        
+        schedPublishers: 'Publishers List',
+        schedPublishersFull: 'Congregation Publishers List',
+        layoutOptions: 'Layout:',
+        layoutRow1: '1 Row',
+        layoutRow2: '2 Rows',
+        orientation: 'Orientation:',
+        portrait: 'Portrait',
+        landscape: 'Landscape',
+        addGroup: '+ Add Group',
+        delGroup: 'Delete',
         appTitle: 'MEETING SCHEDULE<br>BEFORE PREACHING<br>SERVICE',
         groupLabel: 'GROUP',
         timeLabel: 'MEETING TIME:',
@@ -1876,6 +2141,11 @@ function getScheduleTypes() {
             key: 'meetingScheduleData',
             label: t('schedPreaching'),
             fullLabel: t('schedPreachingFull')
+        },
+        publishers: {
+            key: 'publishersScheduleData',
+            label: t('schedPublishers'),
+            fullLabel: t('schedPublishersFull')
         },
         weekends: {
             key: 'weekendScheduleData',
@@ -2087,8 +2357,7 @@ function renderMonth(month) {
 function render() {
     const container = document.getElementById('app-content');
     if (!container) return;
-
-    let html = `
+    let html = getGlobalToolbar() + `
         <div class="time-bar">
             <div class="time-bar__left">
                 ${ICONS.clock}
@@ -2386,7 +2655,7 @@ function renderWeekdayMeeting(m) {
 function renderWeekdays() {
     const container = document.getElementById('app-content');
     if (!container) return;
-    let html = '';
+    let html = getGlobalToolbar();
     data.meetings.forEach(m => { html += renderWeekdayMeeting(m); });
     html += `<button class="add-meeting-btn" data-action="add-meeting">${t('addMeeting')}</button>`;
     container.innerHTML = html;
@@ -2483,7 +2752,7 @@ function renderWeekendMeeting(m) {
 function renderWeekends() {
     const container = document.getElementById('app-content');
     if (!container) return;
-    let html = '';
+    let html = getGlobalToolbar();
     data.meetings.forEach(m => { html += renderWeekendMeeting(m); });
     html += `<button class="add-meeting-btn" data-action="add-meeting">${t('addMeeting')}</button>`;
     container.innerHTML = html;
@@ -2617,13 +2886,22 @@ function renderAttendants() {
     if (!container) return;
 
     if (!data.attendantsRows) data.attendantsRows = [createAttendantRow()];
+    if (!data.publishersGroups) {
+        data.publishersGroups = [
+            { id: generateId(), name: 'Группа № 1', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 2', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 3', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 4', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) }
+        ];
+    }
+    if (!data.publishersSettings) { data.publishersSettings = { orientation: 'portrait', layout: '2-rows' }; }
     if (!data.soundRows) data.soundRows = [createSoundRow()];
 
     const inp = (val, field, rowId, table) =>
         `<input type="text" class="att-cell__input" value="${escapeHtmlAtt(val)}" data-att-field="${field}" data-att-row="${rowId}" data-att-table="${table}" placeholder="—">`;
 
     // Table 1: Attendants
-    let att = `
+    let att = getGlobalToolbar() + `
     <div class="att-section">
         <div class="att-section__title">${t('attendantsTitle')}</div>
         <div class="att-table">
@@ -2829,9 +3107,11 @@ function importFromExcel(mode) {
 }
 
 function renderCurrentSchedule() {
+    updatePrintOrientation();
     if (currentSchedule === 'weekdays') renderWeekdays();
     else if (currentSchedule === 'weekends') renderWeekends();
     else if (currentSchedule === 'attendants') renderAttendants();
+    else if (currentSchedule === 'publishers') renderPublishers();
 
     const appContent = document.getElementById('app-content');
     if (appContent && !document.getElementById('exportPdfBtnMeeting')) {
@@ -2905,6 +3185,7 @@ function switchSchedule(type) {
         if (groupNumberEl && data.groupNumber) groupNumberEl.textContent = data.groupNumber;
 
         render();
+        updatePrintOrientation();
 
         const c = document.getElementById('app-content');
         if (c) {
@@ -2923,12 +3204,24 @@ function switchSchedule(type) {
                 data.soundRows = [createSoundRow()];
                 saveData();
             }
+        if (!data.publishersGroups) {
+            data.publishersGroups = [
+                { id: generateId(), name: 'Группа № 1', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+                { id: generateId(), name: 'Группа № 2', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+                { id: generateId(), name: 'Группа № 3', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+                { id: generateId(), name: 'Группа № 4', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) }
+            ];
+        }
+        if (!data.publishersSettings) {
+            data.publishersSettings = { orientation: 'portrait', layout: '2-rows' };
+        }
+
         } else if (!data.meetings) {
             data.meetings = [];
             if (type === 'weekdays') {
                 data.meetings.push(createWeekdayMeeting());
                 data.meetings.push(createWeekdayMeeting());
-            } else {
+            } else if (type === 'publishers') { c.addEventListener('input', handlePublishersInput); c.addEventListener('click', handlePublishersClick); } else {
                 data.meetings.push(createWeekendMeeting());
                 data.meetings.push(createWeekendMeeting());
                 data.meetings.push(createWeekendMeeting());
@@ -2943,7 +3236,7 @@ function switchSchedule(type) {
             if (type === 'attendants') {
                 c.addEventListener('input', handleAttendantsInput);
                 c.addEventListener('click', handleAttendantsClick);
-            } else {
+            } else if (type === 'publishers') { c.addEventListener('input', handlePublishersInput); c.addEventListener('click', handlePublishersClick); } else {
                 c.addEventListener('input', handleMeetingInput);
                 c.addEventListener('change', handleMeetingInput);
                 c.addEventListener('click', handleMeetingClick);
@@ -3107,7 +3400,277 @@ document.addEventListener('click', function(e) {
         closeLangMenu();
     }
 });
+// ===== PUBLISHERS LIST =====
+function updatePrintOrientation() {
+    let styleId = 'print-page-style';
+    let styleEl = document.getElementById(styleId);
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = styleId;
+        document.head.appendChild(styleEl);
+    }
+    const appContainer = document.querySelector('.app');
+    
+    if (currentSchedule === 'publishers' && data.publishersSettings) {
+        let orientation = data.publishersSettings.orientation || 'portrait';
+        styleEl.innerHTML = '@page { size: ' + orientation + ' !important; margin: 5mm; }';
+        if (appContainer) appContainer.style.maxWidth = orientation === 'landscape' ? '1100px' : '800px';
+    } else {
+        let orientation = (data.settings && data.settings.orientation) ? data.settings.orientation : 'landscape';
+        styleEl.innerHTML = '@page { size: ' + orientation + ' !important; margin: 5mm; }';
+        if (appContainer) appContainer.style.maxWidth = orientation === 'landscape' ? '1100px' : '800px';
+    }
+}
 
+let draggedGroupId = null;
+document.addEventListener('dragstart', (e) => {
+    if (e.target.classList && e.target.classList.contains('pub-card')) {
+        draggedGroupId = e.target.dataset.groupId;
+        e.target.classList.add('dragging');
+    }
+});
+document.addEventListener('dragend', (e) => {
+    if (e.target.classList && e.target.classList.contains('pub-card')) {
+        e.target.classList.remove('dragging');
+        draggedGroupId = null;
+    }
+});
+document.addEventListener('dragover', (e) => {
+    if (draggedGroupId) e.preventDefault();
+});
+document.addEventListener('drop', (e) => {
+    if (!draggedGroupId) return;
+    e.preventDefault();
+    const targetCard = e.target.closest('.pub-card');
+    if (targetCard && targetCard.dataset.groupId !== draggedGroupId) {
+        const targetId = targetCard.dataset.groupId;
+        const groups = data.publishersGroups;
+        const draggedIndex = groups.findIndex(g => g.id === draggedGroupId);
+        const targetIndex = groups.findIndex(g => g.id === targetId);
+        const [draggedGroup] = groups.splice(draggedIndex, 1);
+        groups.splice(targetIndex, 0, draggedGroup);
+        saveData();
+        if (currentSchedule === 'publishers') renderPublishers();
+    }
+});
+
+function renderPublishers() {
+    const container = document.getElementById('app-content');
+    if (!container) return;
+    updatePrintOrientation();
+    if (!data.publishersGroups) {
+        data.publishersGroups = [
+            { id: generateId(), name: 'Группа № 1', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 2', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 3', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) },
+            { id: generateId(), name: 'Группа № 4', rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' })) }
+        ];
+    }
+    if (!data.publishersSettings) {
+        data.publishersSettings = { orientation: 'portrait', layout: '2-rows' };
+    }
+    
+    const mainTitle = document.querySelector('.header__title');
+    if (mainTitle) {
+        mainTitle.innerHTML = (t('schedPublishersFull') || 'СПИСОК ВОЗВЕЩАТЕЛЕЙ').toUpperCase();
+    }
+    
+    let columns = data.publishersGroups.length;
+    if (data.publishersSettings && data.publishersSettings.layout === '2-rows') {
+        columns = Math.ceil(data.publishersGroups.length / 2);
+        if (columns < 1) columns = 1;
+    }
+    let gridStyle = 'grid-template-columns: repeat(' + columns + ', 1fr);';
+
+    let html = '<div class="publishers-toolbar no-print">' +
+        '<div class="pub-settings">' +
+            '<label>' + (t('orientation') || 'Ориентация:') + 
+                ' <select data-field="orientation">' +
+                    '<option value="portrait" ' + (data.publishersSettings.orientation==='portrait'?'selected':'') + '>📄 ' + (t('portrait') || 'Книжная') + '</option>' +
+                    '<option value="landscape" ' + (data.publishersSettings.orientation==='landscape'?'selected':'') + '>🖼 ' + (t('landscape') || 'Альбомная') + '</option>' +
+                '</select>' +
+            '</label>' +
+            '<label style="margin-left: 15px;">' + (t('layoutOptions') || 'Отображение:') + 
+                ' <select data-field="layout">' +
+                    '<option value="1-row" ' + (data.publishersSettings.layout==='1-row'?'selected':'') + '>' + (t('layoutRow1') || 'В 1 ряд') + '</option>' +
+                    '<option value="2-rows" ' + (data.publishersSettings.layout==='2-rows'?'selected':'') + '>' + (t('layoutRow2') || 'В 2 ряда') + '</option>' +
+                '</select>' +
+            '</label>' +
+            '<button style="margin-left: 15px;" class="add-pub-group-btn" data-action="import-excel">📥 Импорт Excel</button>' +
+        '</div>' +
+        '<div>' +
+            '<button style="margin-right: 15px; background: #D4A843; color: #1B2A4A;" class="add-pub-group-btn" data-action="export-pdf">🖨️ PDF</button>' +
+            '<button class="add-pub-group-btn" data-action="add-group">' + (t('addGroup') || '+ Добавить группу') + '</button>' +
+        '</div>' +
+    '</div>' +
+    '<div class="publishers-grid" style="' + gridStyle + '">';
+    
+    data.publishersGroups.forEach((group, gIndex) => {
+        html += '<div class="pub-card" draggable="true" data-group-id="' + group.id + '">' +
+            '<div class="pub-card-header">' +
+                '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="opacity:0.8; margin-right: 8px;"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 7,11.5 7,11.5C7,11.5 12,8 17,8Z"/></svg>' +
+                '<input type="text" value="' + escapeHtmlAtt(group.name) + '" data-group-id="' + group.id + '" data-field="groupName">' +
+                '<button class="pub-delete-group-btn no-print" data-action="delete-group" data-group-id="' + group.id + '" title="' + (t('delGroup') || 'Удалить') + '">×</button>' +
+            '</div>' +
+            '<div class="pub-card-body">';
+        
+        group.rows.forEach((row, rIndex) => {
+            html += '<div class="pub-row">' +
+                    '<span class="pub-num" style="font-size: 0.8em; opacity: 0.6; font-weight: normal; border-right: 1px solid #e0e0e0; margin-right: 8px; padding-right: 6px; text-align: right; width: 22px; display: inline-block;">' + row.num + '.</span>' +
+                    '<input type="text" ' + (rIndex < 2 ? 'style="font-weight: bold;" ' : '') + 'value="' + escapeHtmlAtt(row.name) + '" data-group-id="' + group.id + '" data-row-id="' + row.id + '" data-field="pubName">' +
+                    '<button class="pub-delete-row-btn no-print" data-action="delete-row" data-group-id="' + group.id + '" data-row-id="' + row.id + '">×</button>' +
+                '</div>';
+        });
+        
+        html += '<button class="pub-add-row-btn no-print" data-action="add-row" data-group-id="' + group.id + '">+ рядок</button>' +
+            '</div>' +
+            '<div class="pub-card-footer">' +
+                '<svg viewBox="0 0 50 10" width="50" height="10"><path d="M0 5 Q 25 10 50 5 Q 25 0 0 5 Z" fill="#2c4c3b" opacity="0.3"/></svg>' +
+            '</div>' +
+        '</div>';
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
+}
+function handlePublishersInput(e) {
+    const el = e.target;
+    const field = el.dataset.field;
+    if (field === 'orientation' || field === 'layout') {
+        data.publishersSettings[field] = el.value;
+        saveData();
+        renderPublishers();
+    }
+    else if (field === 'groupName') {
+        const group = data.publishersGroups.find(g => g.id === el.dataset.groupId);
+        if (group) group.name = el.value;
+        saveData();
+    }
+    else if (field === 'pubName') {
+        const group = data.publishersGroups.find(g => g.id === el.dataset.groupId);
+        if (group) {
+            const row = group.rows.find(r => r.id === el.dataset.rowId);
+            if (row) row.name = el.value;
+        }
+        saveData();
+    }
+}
+
+function handlePublishersClick(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    
+    if (action === 'export-pdf') {
+        window.print();
+    }
+    else if (action === 'import-excel') {
+        importPublishersFromExcel();
+    }
+    else if (action === 'add-group') {
+        data.publishersGroups.push({
+            id: generateId(),
+            name: 'Нова група',
+            rows: Array(14).fill().map((_, i) => ({ id: generateId(), num: i+1, name: '' }))
+        });
+        saveData();
+        renderPublishers();
+    }
+    else if (action === 'delete-group') {
+        if (confirm('Видалити цю групу? / Удалить эту группу?')) {
+            data.publishersGroups = data.publishersGroups.filter(g => g.id !== btn.dataset.groupId);
+            saveData();
+            renderPublishers();
+        }
+    }
+    else if (action === 'add-row') {
+        const group = data.publishersGroups.find(g => g.id === btn.dataset.groupId);
+        if (group) {
+            group.rows.push({ id: generateId(), num: group.rows.length + 1, name: '' });
+            saveData();
+            renderPublishers();
+        }
+    }
+    else if (action === 'delete-row') {
+        const group = data.publishersGroups.find(g => g.id === btn.dataset.groupId);
+        if (group) {
+            group.rows = group.rows.filter(r => r.id !== btn.dataset.rowId);
+            group.rows.forEach((r, i) => r.num = i + 1);
+            saveData();
+            renderPublishers();
+        }
+    }
+}
+
+function importPublishersFromExcel() {
+    if (typeof XLSX === 'undefined') {
+        alert('Библиотека Excel не загружена. Проверьте подключение к интернету.');
+        return;
+    }
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx,.xls,.csv';
+    input.onchange = function(ev) {
+        const file = ev.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const wb = XLSX.read(e.target.result, { type: 'binary', cellDates: true });
+                const sheetName = wb.SheetNames[0];
+                const sheet = wb.Sheets[sheetName];
+                const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', blankrows: true });
+                
+                if (!rows || rows.length === 0) {
+                    alert('Файл пустой.');
+                    return;
+                }
+                
+                let maxCols = 0;
+                rows.forEach(r => { if (r.length > maxCols) maxCols = r.length; });
+                
+                let newGroups = [];
+                for (let col = 0; col < maxCols; col++) {
+                    let header = rows[0][col] ? String(rows[0][col]).trim() : 'Группа № ' + (col+1);
+                    newGroups.push({ id: generateId(), name: header, rows: [] });
+                }
+                
+                for (let r = 1; r < rows.length; r++) {
+                    for (let c = 0; c < maxCols; c++) {
+                        let cellValue = rows[r][c] ? String(rows[r][c]).trim() : '';
+                        if (cellValue) {
+                            newGroups[c].rows.push({
+                                id: generateId(),
+                                num: newGroups[c].rows.length + 1,
+                                name: cellValue
+                            });
+                        }
+                    }
+                }
+                
+                newGroups.forEach(g => {
+                    while(g.rows.length < 5) {
+                        g.rows.push({ id: generateId(), num: g.rows.length + 1, name: '' });
+                    }
+                });
+                
+                data.publishersGroups = newGroups;
+                saveData();
+                renderPublishers();
+                
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#2C3E6B;color:#C8A45A;padding:12px 20px;border-radius:8px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2)';
+                toast.textContent = '✔️ Успешно импортировано групп: ' + newGroups.length;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            } catch (err) {
+                alert('Ошибка при чтении файла: ' + err.message);
+            }
+        };
+        reader.readAsBinaryString(file);
+    };
+    input.click();
+}
 </script>
 </body>
 </html>
